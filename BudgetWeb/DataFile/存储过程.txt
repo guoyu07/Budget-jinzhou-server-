@@ -1,0 +1,143 @@
+ 
+  create trigger triggerBG_MonPayPlan_insert  on dbo.BG_MonPayPlan  after insert as begin  insert into  JZDBServer.BudgetNetDB.dbo.BG_Unit_MonPayPlan(CPID,PIID,MPFunding,DeptID,MPTime,MPRemark,MPFundingAdd,MPFundingAddTimes,UnitCode)  select *,'01123721-4' from  inserted   end
+  GO
+    
+  create trigger triggerBG_MonPayPlan_update  on dbo.BG_MonPayPlan  after update  as begin  update  JZDBServer.BudgetNetDB.dbo.BG_Unit_MonPayPlan  
+  set  MPFunding=inserted.MPFunding ,
+       MPFundingAdd=inserted.MPFundingAdd ,
+       MPRemark=inserted.MPRemark
+  from  inserted  ,JZDBServer.BudgetNetDB.dbo.BG_Unit_MonPayPlan as a
+  where   a.CPID=inserted.CPID
+ and  a.UnitCode='01123721-4'
+    end
+ 
+ 
+  GO
+  create trigger triggerBG_MonPayPlan_delete  on dbo.BG_MonPayPlan  after delete  as begin  delete  JZDBServer.BudgetNetDB.dbo.BG_Unit_MonPayPlan  from  deleted,JZDBServer.BudgetNetDB.dbo.BG_Unit_MonPayPlan as a   
+  where   a.CPID=deleted.CPID
+ and  a.UnitCode='01123721-4'
+  end 
+    
+  GO
+  create trigger triggerBG_MonPayPlanRemark_insert  on dbo.BG_MonPayPlanRemark  after insert as begin  insert into  JZDBServer.BudgetNetDB.dbo.BG_Unit_MonPayPlanRemark(PRID,DeptID,MATime,MASta,MACause,MAUser,MATimes,UnitCode)  select *,'01123721-4' from  inserted   end
+  GO
+    
+  create trigger triggerBG_MonPayPlanRemark_update  on dbo.BG_MonPayPlanRemark  after update  as begin  update  JZDBServer.BudgetNetDB.dbo.BG_Unit_MonPayPlanRemark  
+  set  MACause=inserted.MACause ,
+       MASta=inserted.MASta  
+  from  inserted  ,JZDBServer.BudgetNetDB.dbo.BG_Unit_MonPayPlanRemark as a
+  where   a.PRID=inserted.PRID
+ and  a.UnitCode='01123721-4'
+    end
+ 
+ 
+  GO
+  create trigger triggerBG_MonPayPlanRemark_delete  on dbo.BG_MonPayPlanRemark  after delete  as begin  delete  JZDBServer.BudgetNetDB.dbo.BG_Unit_MonPayPlanRemark  from  deleted,JZDBServer.BudgetNetDB.dbo.BG_Unit_MonPayPlanRemark as a   
+  where   a.PRID=deleted.PRID
+ and  a.UnitCode='01123721-4'
+    end
+      
+  GO
+ 
+  create trigger  triggerBG_Department_insert  on dbo.BG_Department  after insert as begin  insert into  JZDBServer.BudgetNetDB.dbo.BG_Unit_Department( DepID,DepLev,FaDepID,DepCode,DepName,DepQua,DepSta,DepRem,UnitCode)  select *,'01123721-4' from  inserted   end
+  GO
+    
+  create trigger triggerBG_Department_update  on dbo.BG_Department  after update  as begin  update  JZDBServer.BudgetNetDB.dbo.BG_Unit_Department  
+  set  DepName=inserted.DepName ,
+       DepSta=inserted.DepSta  
+  from  inserted  ,JZDBServer.BudgetNetDB.dbo.BG_Unit_Department as a
+  where    a.DepID=inserted.DepID
+ 		and  a.UnitCode='01123721-4'
+    end
+ 
+ 
+  GO
+  create trigger triggerBG_Department_delete  on dbo.BG_Department  after delete  as begin  delete  JZDBServer.BudgetNetDB.dbo.BG_Unit_Department  from  deleted,JZDBServer.BudgetNetDB.dbo.BG_Unit_Department as a   
+  where    a.DepID=deleted.DepID
+ 		and  a.UnitCode='01123721-4'
+    end
+ 
+    GO 
+ 	    
+    create trigger triggerRM_Receipts_insert on [dbo].[RM_Receipts]  after insert as begin  insert into JZDBServer.BudgetNetDB.dbo.RM_Unit_Receipts(RPID,ADType,RXID,RPStatus,RPCause,RPOdNum,RPOutPro,RPDep,RPMoney,RPReason,RPTime,RPUseName,RPMerge,Flag,RPRemark,RPSources,RPIsGovern,RPDZTT,RPRemark1,RPRemark2,RPRemark3,GKZC,QTZJ,XJZC,SHSJ,FKSJ,UnitCode)  select *,'01123721-4' from  inserted   end
+ 
+     GO
+    create trigger triggerRM_Receipts_update  on [dbo].[RM_Receipts]  after update  as begin  update  JZDBServer.BudgetNetDB.dbo.RM_Unit_Receipts  
+  set     
+ ADType=inserted.ADType		,
+ RXID=inserted.RXID		  ,
+ RPStatus=inserted.RPStatus	  ,
+ RPCause=inserted.RPCause	  ,
+ RPOdNum=inserted.RPOdNum	  ,
+ RPOutPro=inserted.RPOutPro	  ,
+ RPDep=inserted.RPDep		  ,
+ RPMoney=inserted.RPMoney	  ,
+ RPReason=inserted.RPReason	  ,
+ RPTime=inserted.RPTime	  ,
+ RPUseName=inserted.RPUseName	  ,
+ RPMerge=inserted.RPMerge	  ,
+ Flag=inserted.Flag		  ,
+ RPRemark=inserted.RPRemark	  ,
+ RPSources=inserted.RPSources	  ,
+ RPIsGovern=inserted.RPIsGovern  ,
+ RPDZTT=inserted.RPDZTT	  ,
+ RPRemark1=inserted.RPRemark1	  ,
+ RPRemark2=inserted.RPRemark2	  ,
+ RPRemark3=inserted.RPRemark3	  ,
+ GKZC=inserted.GKZC		  ,
+ QTZJ=inserted.QTZJ		  ,
+ XJZC=inserted.XJZC		  ,
+ SHSJ=inserted.SHSJ		  ,
+ FKSJ=inserted.FKSJ		  
+  from  inserted  ,JZDBServer.BudgetNetDB.dbo.RM_Unit_Receipts as a
+  where    a.RPID=inserted.RPID
+ 		and  a.UnitCode='01123721-4'
+    end
+     GO
+    create trigger triggerRM_Receipts_delete on [dbo].[RM_Receipts]  after delete  as begin  delete  JZDBServer.BudgetNetDB.dbo.RM_Unit_Receipts  from  deleted,JZDBServer.BudgetNetDB.dbo.RM_Unit_Receipts as a   
+  where    a.RPID=deleted.RPID
+ 		and  a.UnitCode='01123721-4'
+    end
+     
+  GO
+ 
+  create trigger  triggerBG_IncomeCPay_insert  on dbo.BG_IncomeCPay  after insert as begin  insert into  JZDBServer.BudgetNetDB.dbo.BG_Unit_IncomeCPay( ICPID,DepID,InComeSouce,InComeMon,ICPTime,UnitCode)  select *,'01123721-4' from  inserted   end
+  GO
+    
+  create trigger triggerBG_IncomeCPay_update  on dbo.BG_IncomeCPay  after update  as begin  update  JZDBServer.BudgetNetDB.dbo.BG_Unit_IncomeCPay  
+  set  InComeSouce=inserted.InComeSouce ,
+       InComeMon=inserted.InComeMon ,
+ 	  DepID=inserted.DepID ,
+ 	  ICPTime=inserted.ICPTime 
+  from  inserted  ,JZDBServer.BudgetNetDB.dbo.BG_Unit_IncomeCPay as a
+  where    a.ICPID=inserted.ICPID
+ 		and  a.UnitCode='01123721-4'
+    end
+ 
+ 
+  GO
+  create trigger triggerBG_IncomeCPay_delete  on dbo.BG_IncomeCPay  after delete  as begin  delete  JZDBServer.BudgetNetDB.dbo.BG_Unit_IncomeCPay  from  deleted,JZDBServer.BudgetNetDB.dbo.BG_Unit_IncomeCPay as a   
+  where    a.ICPID=deleted.ICPID
+ 		and  a.UnitCode='01123721-4'
+  end
+ 
+   
+  GO
+ 
+  create trigger  triggerBG_BudgetAllocation_insert  on dbo.BG_BudgetAllocation  after insert as begin  insert into  JZDBServer.BudgetNetDB.dbo.BG_Unit_BudgetAllocation( BAAID,DepID,PIID,BAAMon,SuppMon,BAAYear,UnitCode)  select *,'01123721-4' from  inserted   end
+  GO
+    
+  create trigger triggerBG_BudgetAllocation_update  on dbo.BG_BudgetAllocation  after update  as begin  update  JZDBServer.BudgetNetDB.dbo.BG_Unit_BudgetAllocation  
+  set  BAAMon=inserted.BAAMon ,
+       SuppMon=inserted.SuppMon  
+  from  inserted  ,JZDBServer.BudgetNetDB.dbo.BG_Unit_BudgetAllocation as a
+  where    a.BAAID=inserted.BAAID
+ 		and  a.UnitCode='01123721-4'
+    end
+ 
+ 
+  GO
+  create trigger triggerBG_BudgetAllocation_delete  on dbo.BG_BudgetAllocation  after delete  as begin  delete  JZDBServer.BudgetNetDB.dbo.BG_Unit_BudgetAllocation  from  deleted,JZDBServer.BudgetNetDB.dbo.BG_Unit_BudgetAllocation as a   
+  where    a.BAAID=deleted.BAAID
+ 		and  a.UnitCode='01123721-4'
+  end
