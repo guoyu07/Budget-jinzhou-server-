@@ -1,35 +1,42 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Budgetexecutionrate.aspx.cs" Inherits="WebPage_BudgetAnalyse_Budgetexecutionrate" ValidateRequest="false" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="BudgetexecutionrateNew.aspx.cs" Inherits="WebPage_BudgetAnalyse_BudgetexecutionrateNew" ValidateRequest="false" %>
 
 <%@ Register Assembly="Ext.Net" Namespace="Ext.Net" TagPrefix="ext" %>
 <%@ Register Src="~/WebPage/BudgetAnalyse/FloatUnit.ascx" TagPrefix="uc1" TagName="FloatUnit" %>
-
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title></title>
-    <script type="text/javascript" src="../../js/jquery-1.7.2.min.js"></script>
+    <style>
+           .x-grid-row td { 
+            border-bottom: 1px solid #EDEDED !important;
+            border-right: 1px solid #EDEDED !important;
+        }
+    </style>
     <script>
         var saveData = function () {
             //App.GridData.setValue(Ext.encode(App.gridpl.getRowsValues({ selectedOnly: false })));  
             var tab = App.tabcontrol.activeTab.id;
             App.GridData.setValue($("#" + tab + "-body div").html());
         };
-        var ItemsDB = function (a, b) {
-            if (b.raw.PIEcoSubName == "科室业务费" || b.raw.PIEcoSubName == "局长基金") { App.direct.DB(b.raw.PIEcoSubName); } else { App.direct.DB(b.raw.piid); }
-        }
-        function changeStyle(name) {
-            if ($("#" + name + "-body div table tr").length > 0) {
+        var nodeLoad = function (store, operation, options) {
+            var node = operation.node;
+            App.direct.NodeLoad(node.getId(), {
+                success: function (result) {
+                    node.set('loading', false);
+                    node.set('loaded', true);
+                    var data = Ext.decode(result);
+                    node.appendChild(data, undefined, true);
+                    node.expand();
+                },
 
-                $("#" + name + "-body div table tr").each(function () {
-                    if ($(this).find("td:first div").text() == "总计") {
-                        $(this).attr("style", "color:red;font-weight:bold");
-                    }
-                });
-                return;
-            }
-        }
+                failure: function (errorMsg) {
+                    Ext.Msg.alert('错误', '请重新打开页面');
+                }
+            });
+            return false;
+        };
     </script>
 </head>
 <body>
@@ -121,44 +128,38 @@
                             </Items>
                         </ext:Container>
 
+
                         <ext:TabPanel runat="server" Region="Center" ID="tabcontrol">
                             <Items>
-                                <ext:GridPanel
+                                <ext:TreePanel
                                     ID="Tab1"
+                                    Title="月度执行率"
+                                    Lines="false"
+                                    UseArrows="true"
                                     runat="server"
-                                    Title="预算金额编辑"
-                                    Icon="ApplicationViewColumns" ColumnLines="true">
-                                    <Store>
-                                        <ext:Store runat="server" ID="Store1">
-                                            <Model>
-                                                <ext:Model runat="server">
-                                                    <Fields>
-                                                        <ext:ModelField Name="PIEcoSubName"></ext:ModelField>
-                                                        <ext:ModelField Name="PIID"></ext:ModelField>
-                                                        <ext:ModelField Name="BQMon"></ext:ModelField>
-                                                        <ext:ModelField Name="CashierBalance"></ext:ModelField>
-                                                        <ext:ModelField Name="PMoney"></ext:ModelField>
-                                                        <ext:ModelField Name="PMoney1"></ext:ModelField>
-                                                        <ext:ModelField Name="PMoney2"></ext:ModelField>
-                                                        <ext:ModelField Name="totalMon"></ext:ModelField>
-                                                        <ext:ModelField Name="RPMoney"></ext:ModelField>
-                                                        <ext:ModelField Name="RPMoney1"></ext:ModelField>
-                                                        <ext:ModelField Name="RPMoney2"></ext:ModelField>
-                                                    </Fields>
-                                                </ext:Model>
-                                            </Model>
-                                            <Listeners>
-                                                <Load Handler="changeStyle('Tab1');"></Load>
-                                            </Listeners>
-                                        </ext:Store>
-
-                                    </Store>
-                                    <Listeners>
-                                        <ItemDblClick Fn="ItemsDB"></ItemDblClick>
-                                    </Listeners>
+                                    AutoScroll="true"
+                                    Animate="true"
+                                    Mode="Remote"
+                                    RootVisible="false"
+                                    SingleExpand="False"
+                                    ContainerScroll="true">
+                                    <Fields>
+                                        <ext:ModelField Name="text" />
+                                        <ext:ModelField Name="PIID"></ext:ModelField>
+                                        <ext:ModelField Name="BQMon"></ext:ModelField>
+                                        <ext:ModelField Name="CashierBalance"></ext:ModelField>
+                                        <ext:ModelField Name="PMoney"></ext:ModelField>
+                                        <ext:ModelField Name="PMoney1"></ext:ModelField>
+                                        <ext:ModelField Name="PMoney2"></ext:ModelField>
+                                        <ext:ModelField Name="totalMon"></ext:ModelField>
+                                        <ext:ModelField Name="RPMoney"></ext:ModelField>
+                                        <ext:ModelField Name="RPMoney1"></ext:ModelField>
+                                        <ext:ModelField Name="RPMoney2"></ext:ModelField>
+                                    </Fields>
                                     <ColumnModel>
                                         <Columns>
-                                            <ext:Column runat="server" DataIndex="PIEcoSubName" Flex="1" Text="经济科目"></ext:Column>
+                                            <ext:TreeColumn ID="TreeColumn1" runat="server" DataIndex="text" Text="经济科目" Flex="4">
+                                            </ext:TreeColumn>
                                             <ext:Column runat="server" DataIndex="totalMon" Width="100" Text="年初经费(元)">
                                                 <Renderer Handler="return (value*1.00).toFixed(2)" />
                                             </ext:Column>
@@ -214,52 +215,46 @@
                                             <ext:Column runat="server" Text="预算执行率">
                                                 <Columns>
                                                     <ext:Column runat="server" EmptyCellText="0" Width="100" Text="申请数">
-                                                        <Renderer Handler="return ((record.data.RPMoney / record.data.totalMon)*100).toFixed(2)+'%';" />
+                                                        <Renderer Handler="return ((record.data.RPMoney / (record.data.totalMon==0?1:record.data.totalMon))*100).toFixed(2)+'%';" />
                                                     </ext:Column>
                                                     <ext:Column runat="server" EmptyCellText="0" Width="100" Text="已审核">
-                                                        <Renderer Handler="return ((record.data.RPMoney1 / record.data.totalMon)*100).toFixed(2)+'%';" />
+                                                        <Renderer Handler="return ((record.data.RPMoney1 / (record.data.totalMon==0?1:record.data.totalMon))*100).toFixed(2)+'%';" />
                                                     </ext:Column>
                                                     <ext:Column runat="server" Width="100" Text="已支付">
-                                                        <Renderer Handler="return ((record.data.RPMoney2 / record.data.totalMon)*100).toFixed(2)+'%';" />
+                                                        <Renderer Handler="return ((record.data.RPMoney2 / (record.data.totalMon==0?1:record.data.totalMon))*100).toFixed(2)+'%';" />
                                                     </ext:Column>
                                                 </Columns>
                                             </ext:Column>
                                         </Columns>
                                     </ColumnModel>
                                     <Listeners>
+                                        <BeforeLoad Fn="nodeLoad" />
                                         <Activate Handler="#{Label2}.show();#{cmbmonth}.show();"></Activate>
                                     </Listeners>
-                                </ext:GridPanel>
-                                <ext:GridPanel
+                                </ext:TreePanel>
+                                <ext:TreePanel
                                     ID="Tab2"
+                                    Title="年度执行率"
+                                    Lines="false"
+                                    UseArrows="true"
                                     runat="server"
-                                    Title="年度累计"
-                                    AutoScroll="true" ColumnLines="true">
-                                    <Store>
-                                        <ext:Store runat="server" ID="Store2">
-                                            <Model>
-                                                <ext:Model runat="server">
-                                                    <Fields>
-                                                        <ext:ModelField Name="PIID"></ext:ModelField>
-                                                        <ext:ModelField Name="PIEcoSubName"></ext:ModelField>
-                                                        <ext:ModelField Name="totalMon"></ext:ModelField>
-                                                        <ext:ModelField Name="MPFunding"></ext:ModelField>
-                                                        <ext:ModelField Name="RPMoney2"></ext:ModelField> 
-                                                    </Fields>
-                                                </ext:Model>
-                                            </Model>
-                                            <Listeners>
-                                                <Load Handler="changeStyle('Tab2');"></Load>
-                                            </Listeners>
-                                        </ext:Store>
-
-                                    </Store>
-                                    <Listeners>
-                                        <ItemDblClick Fn="ItemsDB"></ItemDblClick>
-                                    </Listeners>
+                                    AutoScroll="true"
+                                    Animate="true"
+                                    SingleExpand="False"
+                                    Mode="Remote"
+                                    RootVisible="false"
+                                    ContainerScroll="true">
+                                    <Fields>
+                                        <ext:ModelField Name="PIID"></ext:ModelField>
+                                        <ext:ModelField Name="PIEcoSubName"></ext:ModelField>
+                                        <ext:ModelField Name="totalMon"></ext:ModelField>
+                                        <ext:ModelField Name="MPFunding"></ext:ModelField>
+                                        <ext:ModelField Name="RPMoney2"></ext:ModelField>
+                                    </Fields>
                                     <ColumnModel>
                                         <Columns>
-                                            <ext:Column runat="server" Text="经济科目" Width="120" DataIndex="PIEcoSubName"></ext:Column>
+                                            <ext:TreeColumn ID="TreeColumn2" runat="server" DataIndex="text" Text="经济科目" Flex="4">
+                                            </ext:TreeColumn>
                                             <ext:Column runat="server" Text="年初预算金额（元）" Width="120" DataIndex="totalMon">
                                                 <Renderer Handler="return (value*1.00).toFixed(2)" />
                                             </ext:Column>
@@ -282,10 +277,10 @@
                                             <ext:Column runat="server" Text="执行率">
                                                 <Columns>
                                                     <ext:Column runat="server" Text="计划" Width="100">
-                                                        <Renderer Handler="return ((record.data.MPFunding / record.data.totalMon)*100).toFixed(2)+'%';" />
+                                                        <Renderer Handler="return ((record.data.MPFunding / (record.data.totalMon==0?1:record.data.totalMon))*100).toFixed(2)+'%';" />
                                                     </ext:Column>
                                                     <ext:Column runat="server" Text="执行" Width="100">
-                                                        <Renderer Handler="return ((record.data.RPMoney2 / record.data.totalMon)*100).toFixed(2)+'%';" />
+                                                        <Renderer Handler="return ((record.data.RPMoney2 / (record.data.totalMon==0?1:record.data.totalMon))*100).toFixed(2)+'%';" />
                                                     </ext:Column>
                                                 </Columns>
                                             </ext:Column>
@@ -293,18 +288,17 @@
                                         </Columns>
                                     </ColumnModel>
                                     <Listeners>
+                                        <BeforeLoad Fn="nodeLoad" />
                                         <Activate Handler="#{Label2}.hide();#{cmbmonth}.hide();"></Activate>
                                     </Listeners>
+                                </ext:TreePanel>
 
-                                </ext:GridPanel>
                             </Items>
                         </ext:TabPanel>
                     </Items>
                 </ext:Panel>
 
-
             </Items>
-
 
         </ext:Viewport>
     </form>

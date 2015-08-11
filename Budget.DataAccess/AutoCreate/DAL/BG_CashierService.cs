@@ -1,8 +1,8 @@
-//============================================================
+﻿//============================================================
 // Producnt name:		Auto Generate
 // Version: 			1.0
 // Coded by:			Wu Di (wd_kk@qq.com)
-// Auto generated at: 	2014/11/9 15:51:44
+// Auto generated at: 	2015/8/6 15:34:18
 //============================================================
 
 using System;
@@ -10,17 +10,18 @@ using System.Collections.Generic;
 using System.Text;
 using System.Data;
 using System.Data.SqlClient;
+using BudgetWeb.DAL;
 using BudgetWeb.Model;
 
-namespace BudgetWeb.DAL
+namespace BudgetWeb.Dal
 {
 	public static partial class BG_CashierService
 	{
         public static BG_Cashier AddBG_Cashier(BG_Cashier bG_Cashier)
 		{
             string sql =
-				"INSERT BG_Cashier (Piid, BgMon, CZMon, QTMon, BQMon, DepID, CTime)" +
-				"VALUES (@Piid, @BgMon, @CZMon, @QTMon, @BQMon, @DepID, @CTime)";
+				"INSERT BG_Cashier (Piid, BgMon, CZMon, QTMon, BQMon, DepID, CTime, CashierBalance)" +
+				"VALUES (@Piid, @BgMon, @CZMon, @QTMon, @BQMon, @DepID, @CTime, @CashierBalance)";
 				
 			sql += " ; SELECT @@IDENTITY";
 
@@ -34,7 +35,8 @@ namespace BudgetWeb.DAL
 					new SqlParameter("@QTMon", bG_Cashier.QTMon),
 					new SqlParameter("@BQMon", bG_Cashier.BQMon),
 					new SqlParameter("@DepID", bG_Cashier.DepID),
-					new SqlParameter("@CTime", bG_Cashier.CTime)
+					new SqlParameter("@CTime", bG_Cashier.CTime),
+					new SqlParameter("@CashierBalance", bG_Cashier.CashierBalance)
 				};
 			
                 string IdStr = DBUnity.ExecuteScalar(CommandType.Text, sql, para);
@@ -96,7 +98,8 @@ namespace BudgetWeb.DAL
 	                "QTMon = @QTMon, " +
 	                "BQMon = @BQMon, " +
 	                "DepID = @DepID, " +
-	                "CTime = @CTime " +
+	                "CTime = @CTime, " +
+	                "CashierBalance = @CashierBalance " +
                 "WHERE Cashierid = @Cashierid";
 
 
@@ -111,7 +114,8 @@ namespace BudgetWeb.DAL
 					new SqlParameter("@QTMon", bG_Cashier.QTMon),
 					new SqlParameter("@BQMon", bG_Cashier.BQMon),
 					new SqlParameter("@DepID", bG_Cashier.DepID),
-					new SqlParameter("@CTime", bG_Cashier.CTime)
+					new SqlParameter("@CTime", bG_Cashier.CTime),
+					new SqlParameter("@CashierBalance", bG_Cashier.CashierBalance)
 				};
 
                 int t = DBUnity.ExecuteNonQuery(CommandType.Text, sql, para);
@@ -161,6 +165,7 @@ namespace BudgetWeb.DAL
                     bG_Cashier.BQMon = dt.Rows[0]["BQMon"] == DBNull.Value ? 0 : (decimal)dt.Rows[0]["BQMon"];
                     bG_Cashier.DepID = dt.Rows[0]["DepID"] == DBNull.Value ? 0 : (int)dt.Rows[0]["DepID"];
                     bG_Cashier.CTime = dt.Rows[0]["CTime"] == DBNull.Value ? DateTime.MinValue : (DateTime)dt.Rows[0]["CTime"];
+                    bG_Cashier.CashierBalance = dt.Rows[0]["CashierBalance"] == DBNull.Value ? 0 : (decimal)dt.Rows[0]["CashierBalance"];
                     
                     return bG_Cashier;
                 }

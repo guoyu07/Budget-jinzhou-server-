@@ -46,6 +46,7 @@ public partial class WebPage_BudgetControl_MonPayPlanNew : BudgetBasePage
             {
                 cmbpici.SelectedItem.Value = MATimesBind().ToString();
             }
+            cmbpici.SelectedItem.Value = "1";
             gettotal();
             GetPIETotalBind();
             GetGridPaneltotal();
@@ -374,117 +375,117 @@ public partial class WebPage_BudgetControl_MonPayPlanNew : BudgetBasePage
         Node nodeFP = new Node();
         Node nodeOB = new Node();
         Node nodeOP = new Node();
-        if (NodeID == "root")
-        {
-            rootNode.Text = "经济科目";
-            rootNode.NodeID = "PA";
-            rootNode.Icon = Icon.Folder;
-            nodes.Add(rootNode);
-            rootNode.Expanded = true;
-        }
-        else if (NodeID == "PA")
-        {
-            if (SingleNode(NodeID) == 2)
-            {
-                nodeF.NodeID = "nodeF";
-                nodeF.Text = Financial_allocation;
-                nodeF.Icon = Icon.Folder;
-                nodes.Add(nodeF);
-                nodeF.Expanded = true;
-            }
-            //else if (SingleNode(NodeID) == 1)
-            //{
-            //    nodeO.NodeID = "nodeO";
-            //    nodeO.Text = Other_funds;
-            //    nodeO.Icon = Icon.Folder;
-            //    nodes.Add(nodeO);
-            //    nodeO.Expanded = true;
-            //}
-            else if (SingleNode(NodeID) == 3)
-            {
-                nodeF.NodeID = "nodeF";
-                nodeF.Text = Financial_allocation;
-                nodeF.Icon = Icon.Folder;
-                nodes.Add(nodeF);
-                //nodeO.NodeID = "nodeO";
-                //nodeO.Text = Other_funds;
-                //nodeO.Icon = Icon.Folder;
-                //nodes.Add(nodeO);
-                //nodeO.Expanded = true;
-                nodeF.Expanded = true;
-            }
-        }
-        else if (NodeID == "nodeF")
-        {
-            //if (SingleNode(NodeID) == 21)
-            //{
-            //    nodeFB.NodeID = "nodeFB";
-            //    nodeFB.Text = BasicIncome;
-            //    nodeFB.Icon = Icon.Folder;
-            //    nodes.Add(nodeFB);
-            //    nodeFB.Expanded = true;
-            //}
-            //else if (SingleNode(NodeID) == 22)
-            //{
-            //    nodeFP.NodeID = "nodeFP";
-            //    nodeFP.Text = ProjectIncome;
-            //    nodeFP.Icon = Icon.Folder;
-            //    nodes.Add(nodeFP);
-            //    nodeFP.Expanded = true;
-            //}
-            //else if (SingleNode(NodeID) == 23)
-            //{
-            //    nodeFB.NodeID = "nodeFB";
-            //    nodeFB.Text = BasicIncome;
-            //    nodeFB.Icon = Icon.Folder;
-            //    nodes.Add(nodeFB);
+        //if (NodeID == "root")
+        //{
+        //    rootNode.Text = "经济科目";
+        //    rootNode.NodeID = "PA";
+        //    rootNode.Icon = Icon.Folder;
+        //    nodes.Add(rootNode);
+        //    rootNode.Expanded = true;
+        //}
+        //else if (NodeID == "PA")
+        //{
+        //    if (SingleNode(NodeID) == 2)
+        //    {
+        //        nodeF.NodeID = "nodeF";
+        //        nodeF.Text = Financial_allocation;
+        //        nodeF.Icon = Icon.Folder;
+        //        nodes.Add(nodeF);
+        //        nodeF.Expanded = true;
+        //    }
+        //    //else if (SingleNode(NodeID) == 1)
+        //    //{
+        //    //    nodeO.NodeID = "nodeO";
+        //    //    nodeO.Text = Other_funds;
+        //    //    nodeO.Icon = Icon.Folder;
+        //    //    nodes.Add(nodeO);
+        //    //    nodeO.Expanded = true;
+        //    //}
+        //    else if (SingleNode(NodeID) == 3)
+        //    {
+        //        nodeF.NodeID = "nodeF";
+        //        nodeF.Text = Financial_allocation;
+        //        nodeF.Icon = Icon.Folder;
+        //        nodes.Add(nodeF);
+        //        //nodeO.NodeID = "nodeO";
+        //        //nodeO.Text = Other_funds;
+        //        //nodeO.Icon = Icon.Folder;
+        //        //nodes.Add(nodeO);
+        //        //nodeO.Expanded = true;
+        //        nodeF.Expanded = true;
+        //    }
+        //}
+        //else if (NodeID == "nodeF")
+        //{
+        //    //if (SingleNode(NodeID) == 21)
+        //    //{
+        //    //    nodeFB.NodeID = "nodeFB";
+        //    //    nodeFB.Text = BasicIncome;
+        //    //    nodeFB.Icon = Icon.Folder;
+        //    //    nodes.Add(nodeFB);
+        //    //    nodeFB.Expanded = true;
+        //    //}
+        //    //else if (SingleNode(NodeID) == 22)
+        //    //{
+        //    //    nodeFP.NodeID = "nodeFP";
+        //    //    nodeFP.Text = ProjectIncome;
+        //    //    nodeFP.Icon = Icon.Folder;
+        //    //    nodes.Add(nodeFP);
+        //    //    nodeFP.Expanded = true;
+        //    //}
+        //    //else if (SingleNode(NodeID) == 23)
+        //    //{
+        //    //    nodeFB.NodeID = "nodeFB";
+        //    //    nodeFB.Text = BasicIncome;
+        //    //    nodeFB.Icon = Icon.Folder;
+        //    //    nodes.Add(nodeFB);
 
-            //    nodeFP.NodeID = "nodeFP";
-            //    nodeFP.Text = ProjectIncome;
-            //    nodeFP.Icon = Icon.Folder;
-            //    nodes.Add(nodeFP);
-            //    nodeFB.Expanded = true;
-            //    nodeFP.Expanded = true;
-            //}
-            nodeFB.NodeID = "nodeFB";
-            nodeFB.Text = BasicIncome;
-            nodeFB.Icon = Icon.Folder;
-            nodes.Add(nodeFB);
-            nodeFB.Expanded = true;
-        }
-        else if (NodeID == "nodeO")
-        {
-            if (SingleNode(NodeID) == 11)
-            {
-                nodeOB.NodeID = "nodeOB";
-                nodeOB.Text = BasicIncome;
-                nodeOB.Icon = Icon.Folder;
-                nodes.Add(nodeOB);
-                nodeOB.Expanded = true;
-            }
-            else if (SingleNode(NodeID) == 12)
-            {
-                nodeOP.NodeID = "nodeOP";
-                nodeOP.Text = ProjectIncome;
-                nodeOP.Icon = Icon.Folder;
-                nodes.Add(nodeOP);
-                nodeOP.Expanded = true;
-            }
-            else if (SingleNode(NodeID) == 13)
-            {
-                nodeOB.NodeID = "nodeOB";
-                nodeOB.Text = BasicIncome;
-                nodeOB.Icon = Icon.Folder;
-                nodes.Add(nodeOB);
-                nodeOP.NodeID = "nodeOP";
-                nodeOP.Text = ProjectIncome;
-                nodeOP.Icon = Icon.Folder;
-                nodes.Add(nodeOP);
-                nodeOB.Expanded = true;
-                nodeOP.Expanded = true;
-            }
-        }
-        else if (NodeID == "nodeFB")
+        //    //    nodeFP.NodeID = "nodeFP";
+        //    //    nodeFP.Text = ProjectIncome;
+        //    //    nodeFP.Icon = Icon.Folder;
+        //    //    nodes.Add(nodeFP);
+        //    //    nodeFB.Expanded = true;
+        //    //    nodeFP.Expanded = true;
+        //    //}
+        //    nodeFB.NodeID = "nodeFB";
+        //    nodeFB.Text = BasicIncome;
+        //    nodeFB.Icon = Icon.Folder;
+        //    nodes.Add(nodeFB);
+        //    nodeFB.Expanded = true;
+        //}
+        //else if (NodeID == "nodeO")
+        //{
+        //    if (SingleNode(NodeID) == 11)
+        //    {
+        //        nodeOB.NodeID = "nodeOB";
+        //        nodeOB.Text = BasicIncome;
+        //        nodeOB.Icon = Icon.Folder;
+        //        nodes.Add(nodeOB);
+        //        nodeOB.Expanded = true;
+        //    }
+        //    else if (SingleNode(NodeID) == 12)
+        //    {
+        //        nodeOP.NodeID = "nodeOP";
+        //        nodeOP.Text = ProjectIncome;
+        //        nodeOP.Icon = Icon.Folder;
+        //        nodes.Add(nodeOP);
+        //        nodeOP.Expanded = true;
+        //    }
+        //    else if (SingleNode(NodeID) == 13)
+        //    {
+        //        nodeOB.NodeID = "nodeOB";
+        //        nodeOB.Text = BasicIncome;
+        //        nodeOB.Icon = Icon.Folder;
+        //        nodes.Add(nodeOB);
+        //        nodeOP.NodeID = "nodeOP";
+        //        nodeOP.Text = ProjectIncome;
+        //        nodeOP.Icon = Icon.Folder;
+        //        nodes.Add(nodeOP);
+        //        nodeOB.Expanded = true;
+        //        nodeOP.Expanded = true;
+        //    }
+        //}
+        if (NodeID == "root")
         {
             SetNode(tem, Financial_allocation, BasicIncome, nodes);
         }
@@ -535,10 +536,19 @@ public partial class WebPage_BudgetControl_MonPayPlanNew : BudgetBasePage
             common.IntSafeConvert(cmbpici.SelectedItem.Value));
         DataTable dtapply1 = BG_MonPayPlanGenerateLogic.GetMonPayTime1(YearMonth, DepID,
             common.IntSafeConvert(cmbpici.SelectedItem.Value));
-        string pici = cmbpici.SelectedItem.Value;
-        string pici1 = cmbpici.RawValue.ToString();
-        string pici2 = cmbpici.SelectedItem.Text;
-        pici = pici1 == pici2 ? pici1 : pici2;
+        string pici ="1"; 
+        try
+        {
+            pici = cmbpici.SelectedItem.Value;
+            string pici1 = cmbpici.RawValue.ToString();
+            string pici2 = cmbpici.SelectedItem.Text;
+            pici = pici1 == pici2 ? pici1 : pici2;
+        }
+        catch (Exception ex)
+        {
+            pici ="1";  
+        }
+       
 
         decimal sq = BG_MonPayPlanGenerateLogic.GetsqMon(CurrentYear + "-" + cmbmon.SelectedItem.Value,
              DepID, common.IntSafeConvert(pici));
@@ -887,6 +897,16 @@ public partial class WebPage_BudgetControl_MonPayPlanNew : BudgetBasePage
         if (hidflag.Text == "1")
         {
             X.Msg.Alert("申请月度用款计划", yearMonth + "月已经提交，不允许修改").Show();
+            return;
+        }
+        if (hidflag.Text == "4")
+        {
+            X.Msg.Alert("申请月度用款计划",  "本月未审核通过，不允许为下月申请预算").Show();
+            return;
+        } 
+        if (hidflag.Text == "5")
+        {
+            X.Msg.Alert("申请月度用款计划", "该退回申请已无效").Show();
             return;
         }
         e.Accept = true;
@@ -1270,6 +1290,15 @@ public partial class WebPage_BudgetControl_MonPayPlanNew : BudgetBasePage
         string pici2 = cmbpici.SelectedItem.Text;
         pici = pici1 == pici2 ? pici1 : pici2;
         string yearMonth = CurrentYear + "-" + cmbmon.SelectedItem.Value;
+        if (common.IntSafeConvert(cmbmon.SelectedItem.Value) > common.IntSafeConvert(DateTime.Now.Month) && !BG_MonPayPlanGenerateLogic.IsAuditMonPay(DateTime.Now.ToString("yyyy-MM"), DepID, common.IntSafeConvert(pici)))
+        {
+            X.Msg.Alert("申请月度用款计划", "本月未审核通过,无法为该月申请预算.").Show();
+            hidflag.Text = "4";
+            btnsubmit.Hidden = true; 
+            NFeditor.Disable(true);
+            Session["NodeBC59"] = 1;
+            return false;
+        }
         if (BG_MonPayPlanRemarkLogic.IsRemark(DepID, yearMonth, common.IntSafeConvert(pici)))
         {
             btnsubmit.Hidden = true;
@@ -1318,6 +1347,15 @@ public partial class WebPage_BudgetControl_MonPayPlanNew : BudgetBasePage
             }
             else if (BG_MonPayPlanGenerateLogic.ISMonlatePay(yearMonth, DepID, common.IntSafeConvert(pici)))
             {
+                if ( common.IntSafeConvert(cmbmon.SelectedItem.Value) < common.IntSafeConvert(DateTime.Now.Month))
+                {
+                    X.Msg.Alert("申请月度用款计划", "该退回申请已无效").Show();
+                    hidflag.Text = "5";
+                    btnsubmit.Hidden = true;
+                    NFeditor.Disable(true);
+                    Session["NodeBC59"] = 1;
+                    return false;
+                }
 
                 //X.Msg.Alert("申请月度用款计划", yearMonth + "月已经提交，是否确定要修改").Show();
                 string msg = string.Format("月已经被财务室退回（{0}），请核实数据后修改?", BG_MonPayPlanGenerateLogic.MonlatePayCause(yearMonth, DepID));

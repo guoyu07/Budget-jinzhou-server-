@@ -833,7 +833,7 @@ public partial class _Default : BudgetBasePage
             Node node5 = new Node();
             node5.NodeID = "NodeBA5";
             node5.Text = "预算执行率";
-            node5.Href = "WebPage\\BudgetAnalyse\\Budgetexecutionrate.aspx";
+            node5.Href = "WebPage\\BudgetAnalyse\\BudgetexecutionrateNew.aspx";
             node5.Icon = Icon.PageLink;
             node5.Leaf = true;
             nodes.Add(node5);

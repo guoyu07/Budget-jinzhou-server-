@@ -454,6 +454,7 @@ public partial class BudgetPage_mainPages_ChaSecAudit : BudgetBasePage
                     BG_Cashier bgCashier = BG_CashierManager.GetBG_CashierByCashierid(CashierID);
                     bgCashier.BQMon += ParToDecimal.ParToDel(dt.Rows[i]["MPFundingAdd"].ToString());
                     bgCashier.BgMon += ParToDecimal.ParToDel(dt.Rows[i]["MPFundingAdd"].ToString());
+                    bgCashier.CashierBalance += ParToDecimal.ParToDel(dt.Rows[i]["MPFundingAdd"].ToString());
                     bgCashier.CZMon = 0;
                     bgCashier.QTMon = 0;
                     bgCashier.CTime = mppr.MATime;
@@ -466,6 +467,7 @@ public partial class BudgetPage_mainPages_ChaSecAudit : BudgetBasePage
                     BG_Cashier bgCashier = new BG_Cashier();
                     bgCashier.BQMon += ParToDecimal.ParToDel(dt.Rows[i]["MPFundingAdd"].ToString());
                     bgCashier.BgMon += ParToDecimal.ParToDel(dt.Rows[i]["MPFundingAdd"].ToString());
+                    bgCashier.CashierBalance += ParToDecimal.ParToDel(dt.Rows[i]["MPFundingAdd"].ToString());
                     bgCashier.CZMon = 0;
                     bgCashier.QTMon = 0;
                     bgCashier.CTime = mppr.MATime;

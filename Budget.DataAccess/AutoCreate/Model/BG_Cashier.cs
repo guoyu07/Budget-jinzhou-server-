@@ -1,8 +1,8 @@
-//============================================================
+﻿//============================================================
 // Producnt name:		Auto Generate
 // Version: 			1.0
 // Coded by:			Wu Di (wd_kk@qq.com)
-// Auto generated at: 	2014/11/9 15:51:43
+// Auto generated at: 	2015/8/6 15:34:17
 //============================================================
 
 using System;
@@ -24,6 +24,7 @@ namespace BudgetWeb.Model
 		private decimal bQMon;
 		private int depID;
 		private DateTime cTime;
+		private decimal cashierBalance;
 
 		
 		public BG_Cashier() { }
@@ -85,6 +86,13 @@ namespace BudgetWeb.Model
 		{
 			get { return this.cTime; }
 			set { this.cTime = value; }
+		}		
+		
+		
+		public decimal CashierBalance
+		{
+			get { return this.cashierBalance; }
+			set { this.cashierBalance = value; }
 		}		
 		
 	}

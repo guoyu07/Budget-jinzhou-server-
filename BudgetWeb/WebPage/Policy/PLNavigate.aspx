@@ -30,10 +30,12 @@
             width: 76px;
         }
     </style>
+    
 </head>
 <body>
     <form id="form1" runat="server">
-        <div style="height: 10%;  " >
+        <div style="height: 10%;  " >  
+              <div runat="server" class="alert alert-warning" id="yuemotixing"><%=ymdate %></div>
               <div runat="server" class="alert alert-warning" id="hidtj">
        <a href="../BudgetControl/ControlAudit.aspx?Audit=0" class="alert-link">预算控制当前未办事项提醒：您有<%=Sjtj %>条数据财务室待审核 </a> </div> 
         <div runat="server" class="alert alert-warning" id="hidsbtj" >

@@ -32,6 +32,35 @@
             var p2 = new Array();
             var p3 = new Array();
             var p4 = new Array();
+            var trlist = "";
+            var treebody = "#TPPayIncome-body div table tbody tr";
+            var tr1;
+            var tr2;
+            var tr3;
+            var tr4;
+            if ($(treebody).length > 0) {
+                $(treebody).each(function () {
+                    if (!$(this).hasClass("x-grid-tree-node-leaf")) {
+                        if ($(this).prop("innerText").indexOf("工资福利支出") > -1) {
+                            tr1 = $(this);
+                        }
+                        if ($(this).prop("innerText").indexOf("商品和服务支出") > -1) {
+                            tr2 = $(this);
+                        }
+                        if ($(this).prop("innerText").indexOf("对个人和家庭补助支出") > -1) {
+                            tr3 = $(this);
+                        }
+                        if ($(this).prop("innerText").indexOf("其他资本性支出")>-1) {
+                            tr4 = $(this);
+                        }
+                    }
+                });
+            }
+            trlist = trlist.substring(0, trlist.Length - 1);
+            //var tr1 = $("#"+trlist.split("*")[1]);//$(treebody).eq(1);
+            //var tr2 = $("#"+trlist.split("*")[2]);//$(treebody).eq(2);
+            //var tr3 = $("#"+trlist.split("*")[3]);//$(treebody).eq(3);
+            //var tr4 = $("#"+trlist.split("*")[4]);//$(treebody).eq(4);
             if ($("#HidtotalMon").val()!="") {
                 p1 = $("#HidtotalMon").val().split("*");
             } else {
@@ -52,64 +81,51 @@
             } else {
                 p4 = ["0", "0"];
             } 
-            if ($("#HidtotalMon").val() != "" || $("#ext-gen1131  .x-grid-cell-Column5  div ").html().replace("&nbsp;","").length > 1 || $("#ext-gen1131  .x-grid-cell-last  div ").html().replace("&nbsp;","").length > 1) {
+            if ($("#HidtotalMon").val() != "" || tr1.find(" .x-grid-cell-Column5 div").html().replace("&nbsp;", "").length > 1 || tr1.find("  .x-grid-cell-last div").html().replace("&nbsp;", "").length > 1) {
                 if ($("#HidtotalMon").val() == "") {
 
                 }
                 else {
-                    $("#ext-gen1131  .x-grid-cell-Column5  div ").html(p1[0]); $("#ext-gen1131  .x-grid-cell-last  div ").html(p1[1]);
+                    tr1.find(".x-grid-cell-Column5 div").html(p1[0]); tr1.find(".x-grid-cell-last div").html(p1[1]);
                 }
             }
-            else { $("#ext-gen1131  .x-grid-cell-Column5  div ").html("0"); $("#ext-gen1131  .x-grid-cell-last  div ").html("0"); }
-            if ($("#HidtotalMon1").val() != "" || $("#ext-gen1132  .x-grid-cell-Column5  div ").html().replace("&nbsp;","").length > 1 || $("#ext-gen1132  .x-grid-cell-last  div ").html().replace("&nbsp;","").length > 1) {
+            else { tr1.find(".x-grid-cell-Column5 div").html("0"); tr1.find(".x-grid-cell-last div").html("0"); }
+           
+            if ($("#HidtotalMon1").val() != "" || tr2.find(".x-grid-cell-Column5 div").html().replace("&nbsp;", "").length > 1 || tr2.find(".x-grid-cell-last div").html().replace("&nbsp;", "").length > 1) {
                 if ($("#HidtotalMon1").val() == "") {
 
                 }
                 else {
-                    $("#ext-gen1132  .x-grid-cell-Column5  div ").html(p2[0]); $("#ext-gen1132  .x-grid-cell-last div ").html(p2[1]);
+                    tr2.find(".x-grid-cell-Column5 div").html(p2[0]); tr2.find(".x-grid-cell-lastdiv").html(p2[1]);
                 }
             }
-            else { $("#ext-gen1132  .x-grid-cell-Column5  div ").html("0"); $("#ext-gen1132  .x-grid-cell-last  div ").html("0"); }
-            if ($("#HidtotalMon2").val() != "" || $("#ext-gen1133  .x-grid-cell-Column5  div ").html().replace("&nbsp;","").length > 1 || $("#ext-gen1133  .x-grid-cell-last  div ").html().replace("&nbsp;","").length > 1) {
+            else { tr2.find(".x-grid-cell-Column5 div").html("0"); tr2.find(".x-grid-cell-last div").html("0"); }
+          
+            if ($("#HidtotalMon2").val() != "" || tr3.find(".x-grid-cell-Column5 div").html().replace("&nbsp;", "").length > 1 || tr3.find(".x-grid-cell-last div").html().replace("&nbsp;", "").length > 1) {
                 if ($("#HidtotalMon2").val() == "") {
 
                 }
                 else {
-                    $("#ext-gen1133  .x-grid-cell-Column5  div ").html(p3[0]); $("#ext-gen1133  .x-grid-cell-last  div ").html(p3[1]);
+                    tr3.find(".x-grid-cell-Column5 div").html(p3[0]); tr3.find(".x-grid-cell-last div").html(p3[1]);
                 }
             }
-            else { $("#ext-gen1133  .x-grid-cell-Column5  div ").html("0"); $("#ext-gen1133  .x-grid-cell-last  div ").html("0"); }
-            if ($("#HidtotalMon3").val() != "" || $("#ext-gen1134  .x-grid-cell-Column5  div ").html().replace("&nbsp;","").length > 1 || $("#ext-gen1134  .x-grid-cell-last  div ").html().replace("&nbsp;","").length > 1) {
+            else { tr3.find(".x-grid-cell-Column5 div").html("0"); tr3.find(".x-grid-cell-last div").html("0"); }
+          
+            if ($("#HidtotalMon3").val() != "" || tr4.find(".x-grid-cell-Column5 div").html().replace("&nbsp;", "").length > 1 || tr4.find(".x-grid-cell-last div").html().replace("&nbsp;", "").length > 1) {
                 if ($("#HidtotalMon3").val() == "") {
 
                 }
                 else {
-                    $("#ext-gen1134  .x-grid-cell-Column5  div ").html(p4[0]); $("#ext-gen1134  .x-grid-cell-last  div ").html(p4[1]);
+                    tr4.find(".x-grid-cell-Column5 div").html(p4[0]); tr4.find(".x-grid-cell-last div").html(p4[1]);
                 }
             }
-            else { $("#ext-gen1134  .x-grid-cell-Column5  div ").html("0"); $("#ext-gen1134  .x-grid-cell-last  div ").html("0"); }
-//            $("#ext-gen1134  .x-grid-cell-Column5  div ").html(p1[0]); $("#ext-gen1134  .x-grid-cell-Column6  div ").html(p1[1]);
-//            $("#ext-gen1135  .x-grid-cell-Column5  div ").html(p2[0]); $("#ext-gen1135  .x-grid-cell-Column6  div ").html(p2[1]);
-//            $("#ext-gen1136  .x-grid-cell-Column5  div ").html(p3[0]); $("#ext-gen1136  .x-grid-cell-Column6  div ").html(p3[1]);
-//            $("#ext-gen1137  .x-grid-cell-Column5  div ").html(p4[0]); $("#ext-gen1137  .x-grid-cell-Column6  div ").html(p4[1]);
+            else { tr4.find(".x-grid-cell-Column5 div").html("0"); tr4.find(".x-grid-cell-last div").html("0"); }
+//            $("#ext-gen1134  .x-grid-cell-Column5 div").html(p1[0]); $("#ext-gen1134  .x-grid-cell-Column6 div").html(p1[1]);
+//            $("#ext-gen1135  .x-grid-cell-Column5 div").html(p2[0]); $("#ext-gen1135  .x-grid-cell-Column6 div").html(p2[1]);
+//            $("#ext-gen1136  .x-grid-cell-Column5 div").html(p3[0]); $("#ext-gen1136  .x-grid-cell-Column6 div").html(p3[1]);
+//            $("#ext-gen1137  .x-grid-cell-Column5 div").html(p4[0]); $("#ext-gen1137  .x-grid-cell-Column6 div").html(p4[1]);
         }
-        function changeStyle() { 
-            if ($("#treeview-1012 table tr").length > 0) {
-                $("#treeview-1012 table tr").each(function () {
-                    //                        var shtml = $(this).find("td").children("div").html();
-                    //                        alert(shtml.indexOf("经济科目"))
-                    //                        if (shtml.indexOf("经济科目") != -1 || shtml.indexOf("财政拨款") != -1 || shtml.html().indexOf("基本支出") != -1) {
-                    //                            alert("aaaa")
-                    //                            $(this).attr("style", "display: none !important;");
-                    //                        }
-                    if ($(this).hasClass("x-grid-tree-node-expanded")) {
-                        $(this).attr("style", "display: none !important;");
-                        $("#ext-gen1115").attr("style", "display: none !important;");
-                    }
-                });
-            }
-            GetTotal();
-        }
+      
 
         var GetSelect = function () {
             var select = "";
@@ -215,8 +231,8 @@
                                 <CheckChange Handler="var node = Ext.get(this.getView().getNode(item));
                                       node[checked ? 'addCls' : 'removeCls']('complete')" />
                                 <Load Handler="GetTotal();" Delay="2000"></Load>
-                                <Render Handler="#{TPPayIncome}.getRootNode().expand(true);" Delay="50" /> 
-                                <AfterRender Handler="changeStyle();" Delay="2000"></AfterRender>
+                               <%-- <Render Handler="#{TPPayIncome}.getRootNode().expand(false);" Delay="50" /> --%>
+                                <AfterRender Handler="GetTotal();" Delay="2000"></AfterRender>
                             </Listeners>
                             <DockedItems>
                                 <ext:Button ID="GetBack" runat="server" Dock="Bottom" Text="返回" OnDirectClick="GetBack_DirectClick">

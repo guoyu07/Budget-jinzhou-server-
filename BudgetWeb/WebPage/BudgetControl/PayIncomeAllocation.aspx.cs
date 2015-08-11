@@ -429,117 +429,117 @@ public partial class WebPage_BudgetControl_PayIncomeAllocation : BudgetBasePage
         Node nodeFP = new Node();
         Node nodeOB = new Node();
         Node nodeOP = new Node();
-        if (NodeID == "root")
-        {
-            rootNode.Text = "经济科目";
-            rootNode.NodeID = "PA";
-            rootNode.Icon = Icon.Folder;
-            nodes.Add(rootNode);
-            rootNode.Expanded = true;
-        }
-        else if (NodeID == "PA")
-        {
-            if (SingleNode(NodeID) == 2)
-            {
-                nodeF.NodeID = "nodeF";
-                nodeF.Text = Financial_allocation;
-                nodeF.Icon = Icon.Folder;
-                nodes.Add(nodeF);
-                nodeF.Expanded = true;
-            }
-            //else if (SingleNode(NodeID) == 1)
-            //{
-            //    nodeO.NodeID = "nodeO";
-            //    nodeO.Text = Other_funds;
-            //    nodeO.Icon = Icon.Folder;
-            //    nodes.Add(nodeO);
-            //    nodeO.Expanded = true;
-            //}
-            else if (SingleNode(NodeID) == 3)
-            {
-                nodeF.NodeID = "nodeF";
-                nodeF.Text = Financial_allocation;
-                nodeF.Icon = Icon.Folder;
-                nodes.Add(nodeF);
-                //nodeO.NodeID = "nodeO";
-                //nodeO.Text = Other_funds;
-                //nodeO.Icon = Icon.Folder;
-                //nodes.Add(nodeO);
-                //nodeO.Expanded = true;
-                nodeF.Expanded = true;
-            }
-        }
-        else if (NodeID == "nodeF")
-        {
-            //if (SingleNode(NodeID) == 21)
-            //{
-            //    nodeFB.NodeID = "nodeFB";
-            //    nodeFB.Text = BasicIncome;
-            //    nodeFB.Icon = Icon.Folder;
-            //    nodes.Add(nodeFB);
-            //    nodeFB.Expanded = true;
-            //}
-            //else if (SingleNode(NodeID) == 22)
-            //{
-            //    nodeFP.NodeID = "nodeFP";
-            //    nodeFP.Text = ProjectIncome;
-            //    nodeFP.Icon = Icon.Folder;
-            //    nodes.Add(nodeFP);
-            //    nodeFP.Expanded = true;
-            //}
-            //else if (SingleNode(NodeID) == 23)
-            //{
-            //    nodeFB.NodeID = "nodeFB";
-            //    nodeFB.Text = BasicIncome;
-            //    nodeFB.Icon = Icon.Folder;
-            //    nodes.Add(nodeFB);
+        //if (NodeID == "root")
+        //{
+        //    rootNode.Text = "经济科目";
+        //    rootNode.NodeID = "PA";
+        //    rootNode.Icon = Icon.Folder;
+        //    nodes.Add(rootNode);
+        //    rootNode.Expanded = true;
+        //}
+        //else if (NodeID == "PA")
+        //{
+        //    if (SingleNode(NodeID) == 2)
+        //    {
+        //        nodeF.NodeID = "nodeF";
+        //        nodeF.Text = Financial_allocation;
+        //        nodeF.Icon = Icon.Folder;
+        //        nodes.Add(nodeF);
+        //        nodeF.Expanded = true;
+        //    }
+        //    //else if (SingleNode(NodeID) == 1)
+        //    //{
+        //    //    nodeO.NodeID = "nodeO";
+        //    //    nodeO.Text = Other_funds;
+        //    //    nodeO.Icon = Icon.Folder;
+        //    //    nodes.Add(nodeO);
+        //    //    nodeO.Expanded = true;
+        //    //}
+        //    else if (SingleNode(NodeID) == 3)
+        //    {
+        //        nodeF.NodeID = "nodeF";
+        //        nodeF.Text = Financial_allocation;
+        //        nodeF.Icon = Icon.Folder;
+        //        nodes.Add(nodeF);
+        //        //nodeO.NodeID = "nodeO";
+        //        //nodeO.Text = Other_funds;
+        //        //nodeO.Icon = Icon.Folder;
+        //        //nodes.Add(nodeO);
+        //        //nodeO.Expanded = true;
+        //        nodeF.Expanded = true;
+        //    }
+        //}
+        //else if (NodeID == "nodeF")
+        //{
+        //    //if (SingleNode(NodeID) == 21)
+        //    //{
+        //    //    nodeFB.NodeID = "nodeFB";
+        //    //    nodeFB.Text = BasicIncome;
+        //    //    nodeFB.Icon = Icon.Folder;
+        //    //    nodes.Add(nodeFB);
+        //    //    nodeFB.Expanded = true;
+        //    //}
+        //    //else if (SingleNode(NodeID) == 22)
+        //    //{
+        //    //    nodeFP.NodeID = "nodeFP";
+        //    //    nodeFP.Text = ProjectIncome;
+        //    //    nodeFP.Icon = Icon.Folder;
+        //    //    nodes.Add(nodeFP);
+        //    //    nodeFP.Expanded = true;
+        //    //}
+        //    //else if (SingleNode(NodeID) == 23)
+        //    //{
+        //    //    nodeFB.NodeID = "nodeFB";
+        //    //    nodeFB.Text = BasicIncome;
+        //    //    nodeFB.Icon = Icon.Folder;
+        //    //    nodes.Add(nodeFB);
 
-            //    nodeFP.NodeID = "nodeFP";
-            //    nodeFP.Text = ProjectIncome;
-            //    nodeFP.Icon = Icon.Folder;
-            //    nodes.Add(nodeFP);
-            //    nodeFB.Expanded = true;
-            //    nodeFP.Expanded = true;
-            //}
-            nodeFB.NodeID = "nodeFB";
-            nodeFB.Text = BasicIncome;
-            nodeFB.Icon = Icon.Folder;
-            nodes.Add(nodeFB);
-            nodeFB.Expanded = true;
-        }
-        else if (NodeID == "nodeO")
-        {
-            if (SingleNode(NodeID) == 11)
-            {
-                nodeOB.NodeID = "nodeOB";
-                nodeOB.Text = BasicIncome;
-                nodeOB.Icon = Icon.Folder;
-                nodes.Add(nodeOB);
-                nodeOB.Expanded = true;
-            }
-            else if (SingleNode(NodeID) == 12)
-            {
-                nodeOP.NodeID = "nodeOP";
-                nodeOP.Text = ProjectIncome;
-                nodeOP.Icon = Icon.Folder;
-                nodes.Add(nodeOP);
-                nodeOP.Expanded = true;
-            }
-            else if (SingleNode(NodeID) == 13)
-            {
-                nodeOB.NodeID = "nodeOB";
-                nodeOB.Text = BasicIncome;
-                nodeOB.Icon = Icon.Folder;
-                nodes.Add(nodeOB);
-                nodeOP.NodeID = "nodeOP";
-                nodeOP.Text = ProjectIncome;
-                nodeOP.Icon = Icon.Folder;
-                nodes.Add(nodeOP);
-                nodeOB.Expanded = true;
-                nodeOP.Expanded = true;
-            }
-        }
-        else if (NodeID == "nodeFB")
+        //    //    nodeFP.NodeID = "nodeFP";
+        //    //    nodeFP.Text = ProjectIncome;
+        //    //    nodeFP.Icon = Icon.Folder;
+        //    //    nodes.Add(nodeFP);
+        //    //    nodeFB.Expanded = true;
+        //    //    nodeFP.Expanded = true;
+        //    //}
+        //    nodeFB.NodeID = "nodeFB";
+        //    nodeFB.Text = BasicIncome;
+        //    nodeFB.Icon = Icon.Folder;
+        //    nodes.Add(nodeFB);
+        //    nodeFB.Expanded = true;
+        //}
+        //else if (NodeID == "nodeO")
+        //{
+        //    if (SingleNode(NodeID) == 11)
+        //    {
+        //        nodeOB.NodeID = "nodeOB";
+        //        nodeOB.Text = BasicIncome;
+        //        nodeOB.Icon = Icon.Folder;
+        //        nodes.Add(nodeOB);
+        //        nodeOB.Expanded = true;
+        //    }
+        //    else if (SingleNode(NodeID) == 12)
+        //    {
+        //        nodeOP.NodeID = "nodeOP";
+        //        nodeOP.Text = ProjectIncome;
+        //        nodeOP.Icon = Icon.Folder;
+        //        nodes.Add(nodeOP);
+        //        nodeOP.Expanded = true;
+        //    }
+        //    else if (SingleNode(NodeID) == 13)
+        //    {
+        //        nodeOB.NodeID = "nodeOB";
+        //        nodeOB.Text = BasicIncome;
+        //        nodeOB.Icon = Icon.Folder;
+        //        nodes.Add(nodeOB);
+        //        nodeOP.NodeID = "nodeOP";
+        //        nodeOP.Text = ProjectIncome;
+        //        nodeOP.Icon = Icon.Folder;
+        //        nodes.Add(nodeOP);
+        //        nodeOB.Expanded = true;
+        //        nodeOP.Expanded = true;
+        //    }
+        //}
+        if (NodeID == "root")
         {
             SetNode(tem, Financial_allocation, BasicIncome, nodes);
         }

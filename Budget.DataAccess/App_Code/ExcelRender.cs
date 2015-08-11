@@ -654,7 +654,8 @@ public class ExcelRender
                     //}
 
                     // handling value.
-                    int rowIndex = 2;
+
+                    int rowIndex = sheet.PhysicalNumberOfRows;
                     ICellStyle style = workbook.CreateCellStyle();
                     style.Alignment = HorizontalAlignment.CENTER;
                     style.VerticalAlignment = VerticalAlignment.CENTER;//垂直居中

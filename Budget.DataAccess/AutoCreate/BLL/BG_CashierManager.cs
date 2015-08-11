@@ -1,15 +1,15 @@
-//============================================================
+﻿//============================================================
 // Producnt name:		Auto Generate
 // Version: 			1.0
 // Coded by:			Wu Di (wd_kk@qq.com)
-// Auto generated at: 	2014/11/9 15:51:44
+// Auto generated at: 	2015/8/6 15:34:18
 //============================================================
 
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Data;
-using BudgetWeb.DAL;
+using BudgetWeb.Dal;
 using BudgetWeb.Model;
 
 namespace BudgetWeb.BLL
