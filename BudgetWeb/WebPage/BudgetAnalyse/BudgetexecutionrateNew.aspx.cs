@@ -7,6 +7,7 @@ using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Budget.BLL;
 using BudgetWeb.BLL;
 using Common;
 using Ext.Net;
@@ -332,7 +333,7 @@ public partial class WebPage_BudgetAnalyse_BudgetexecutionrateNew : BudgetBasePa
     }
     protected void btnsend_DirectClick(object sender, DirectEventArgs e)
     {
-        
+
     }
 
 
@@ -569,6 +570,7 @@ public partial class WebPage_BudgetAnalyse_BudgetexecutionrateNew : BudgetBasePa
                     else
                     {
                         nodeN.Icon = Icon.Folder;
+                        //SetNode(piid, nodes);
                         node.Add(nodeN);
                     }
                     //11
@@ -587,6 +589,20 @@ public partial class WebPage_BudgetAnalyse_BudgetexecutionrateNew : BudgetBasePa
     }
     private void SetNode(int tem, NodeCollection node)
     {
+        int depid = 0;
+        if (common.IntSafeConvert(cmbdept.SelectedItem.Value) > 0)
+        {
+            depid = common.IntSafeConvert(cmbdept.SelectedItem.Value);
+        }
+        string year = cmbyear.SelectedItem.Value ?? DateTime.Now.Year.ToString();
+        string month = cmbmonth.SelectedItem.Value ?? DateTime.Now.Month.ToString();
+        month = month.Length == 1 ? "0" + month : month;
+        string yearMonth = year + "-" + month;
+        string precmb = (common.IntSafeConvert(month) - 1).ToString();
+        precmb = precmb.Length == 1 ? "0" + precmb : precmb;
+        string preYearMonth = year + "-" + precmb;
+        DataTable dtpiidTable = ExecuteNewLogic.GetDtPiidList(depid, yearMonth, tem);
+        DataTable predtpiidTable = ExecuteNewLogic.GetDtPiidList(depid, preYearMonth, tem);
         NodeCollection nodes = new NodeCollection();
         DataTable dt = BG_PayIncomeLogic.GetDtPayIncomeByPIID(tem);
         if (dt.Rows.Count > 0)
@@ -604,7 +620,7 @@ public partial class WebPage_BudgetAnalyse_BudgetexecutionrateNew : BudgetBasePa
                     if (!BG_PayIncomeLogic.GetBoolPayIncomeByPIID(common.IntSafeConvert(piid)))
                     {
                         nodeN.Icon = Icon.Anchor;
-                        node.Add(nodeN);
+                        //node.Add(nodeN);
                         nodeN.Leaf = true;
                     }
                     else
@@ -612,14 +628,14 @@ public partial class WebPage_BudgetAnalyse_BudgetexecutionrateNew : BudgetBasePa
                         if (BG_PayIncomeLogic.GetLever(3))
                         {
                             nodeN.Icon = Icon.Anchor;
-                            node.Add(nodeN);
+                            //node.Add(nodeN);
                             nodeN.Leaf = true;
 
                         }
                         else
                         {
                             nodeN.Icon = Icon.Folder;
-                            node.Add(nodeN);
+                            //node.Add(nodeN);
                         }
                     }
                 }
@@ -629,19 +645,19 @@ public partial class WebPage_BudgetAnalyse_BudgetexecutionrateNew : BudgetBasePa
                     {
                         break;
                     }
-                    else if (BG_PayIncomeLogic.ISSign(piid))
+                    if (BG_PayIncomeLogic.ISSign(piid))
                     {
 
                         nodeN.Leaf = true;
                         nodeN.Icon = Icon.Anchor;
-                        node.Add(nodeN);
+                        //node.Add(nodeN);
 
                         //Session["slist"] = listpiid;
                     }
                     else
                     {
                         nodeN.Icon = Icon.Folder;
-                        node.Add(nodeN);
+                        //node.Add(nodeN);
                     }
 
 
@@ -654,8 +670,75 @@ public partial class WebPage_BudgetAnalyse_BudgetexecutionrateNew : BudgetBasePa
                 //SetNode(piid, ftype, incomeinfo, nodeN);
                 //node.Children.Add(nodeN); 
                 //SetNode(piid, ftype, incomeinfo, nodeN);
+                int temnodeadd = 0;
+                nodeN.CustomAttributes.Add(new ConfigItem("PIID", piid.ToString(), ParameterMode.Value));
+
+                if (dtpiidTable.Rows.Count>0&&dtpiidTable.Select("ChildID=" + piid).Length > 0)
+                {
+                    DoBingNode(node, nodeN, depid, preYearMonth, piid);
+                    temnodeadd++;
+                }
+                if (common.IntSafeConvert(precmb) > 0 && dtpiidTable.Rows.Count > 0 && predtpiidTable.Select("ChildID=" + piid).Length > 0)
+                {
+                    preDoBingNode(node, nodeN, depid, preYearMonth, piid);
+                    temnodeadd++;
+                }
+                if (temnodeadd==0)
+                {
+                    node.Add(nodeN);
+                } 
+
             }
         }
+    }
+
+    private void preDoBingNode(NodeCollection node, Node nodeN, int depid, string preYearMonth, int piid)
+    {
+        decimal bqMon = 0;
+        decimal cashierBalance = 0;
+        decimal pMoney = 0;
+        decimal pMoney1 = 0;
+        decimal pMoney2 = 0;
+        DataTable dtcashier= ExecuteNewLogic.GetCashierData(depid, preYearMonth, piid);
+        if (dtcashier.Rows.Count==1)
+        {
+            bqMon = ParToDecimal.ParToDel(dtcashier.Rows[0]["BQMon"].ToString());
+            cashierBalance = ParToDecimal.ParToDel(dtcashier.Rows[0]["CashierBalance"].ToString());
+        }
+        pMoney = ParToDecimal.ParToDel(ExecuteNewLogic.GetReceiptsData(depid, preYearMonth, piid,0));
+        pMoney1 = ParToDecimal.ParToDel(ExecuteNewLogic.GetReceiptsData(depid, preYearMonth, piid, 1));
+        pMoney2 = ParToDecimal.ParToDel(ExecuteNewLogic.GetReceiptsData(depid, preYearMonth, piid, 2));
+        nodeN.CustomAttributes.Add(new ConfigItem("BQMon", bqMon.ToString(), ParameterMode.Value));
+
+        nodeN.CustomAttributes.Add(new ConfigItem("CashierBalance", cashierBalance.ToString(), ParameterMode.Value));
+
+        nodeN.CustomAttributes.Add(new ConfigItem("PMoney", pMoney.ToString(), ParameterMode.Value));
+
+        nodeN.CustomAttributes.Add(new ConfigItem("PMoney1", pMoney1.ToString(), ParameterMode.Value));
+
+        nodeN.CustomAttributes.Add(new ConfigItem("PMoney2", pMoney2.ToString(), ParameterMode.Value));
+        node.Add(nodeN);
+    }
+
+    private void DoBingNode(NodeCollection node, Node nodeN, int depid, string yearMonth, int piid)
+    {
+       
+        decimal rpMoney = 0;
+        decimal rpMoney1 = 0;
+        decimal rpMoney2 = 0;
+        decimal totalMon = 0;
+        rpMoney = ParToDecimal.ParToDel(ExecuteNewLogic.GetReceiptsData(depid, yearMonth, piid, 0));
+        rpMoney1 = ParToDecimal.ParToDel(ExecuteNewLogic.GetReceiptsData(depid, yearMonth, piid, 1));
+        rpMoney2 = ParToDecimal.ParToDel(ExecuteNewLogic.GetReceiptsData(depid, yearMonth, piid, 2));
+        totalMon = ParToDecimal.ParToDel(ExecuteNewLogic.GetBudgetAllocationData(depid, yearMonth.Split('-')[0], piid));
+        nodeN.CustomAttributes.Add(new ConfigItem("RPMoney", rpMoney.ToString(), ParameterMode.Value));
+
+        nodeN.CustomAttributes.Add(new ConfigItem("RPMoney1", rpMoney1.ToString(), ParameterMode.Value));
+
+        nodeN.CustomAttributes.Add(new ConfigItem("RPMoney2", rpMoney2.ToString(), ParameterMode.Value));
+
+        nodeN.CustomAttributes.Add(new ConfigItem("totalMon", totalMon.ToString(), ParameterMode.Value));
+        node.Add(nodeN);
     }
     private int SingleNode(string NodeID)
     {

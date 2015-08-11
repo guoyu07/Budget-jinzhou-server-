@@ -266,6 +266,7 @@
     <Compile Include="Core\BG_SelMonPayPlanLogic.cs" />
     <Compile Include="Core\BG_ChaSecAuditLogic.cs" />
     <Compile Include="Core\DataSetHelper.cs" />
+    <Compile Include="Core\ExecuteNewLogic.cs" />
     <Compile Include="Core\ImportFinaDataLogic.cs" />
     <Compile Include="Core\BG_SupplementaryLogic.cs" />
     <Compile Include="Core\BGQuotaLogic.cs" />
