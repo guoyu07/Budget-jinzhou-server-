@@ -14,7 +14,7 @@ using Ext.Net;
 using NPOI.HSSF.UserModel;
 using NPOI.SS.UserModel;
 
-public partial class WebPage_BudgetAnalyse_BudgetexecutionrateNew : BudgetBasePage
+public partial class WebPage_BudgetAnalyse_BudgetexecutionrateNewyear : BudgetBasePage
 {
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -34,7 +34,7 @@ public partial class WebPage_BudgetAnalyse_BudgetexecutionrateNew : BudgetBasePa
         //Month = Month.Length > 1 ? Month : "0" + Month;
         //cmbmonth.SelectedItem.Value = Month ;
         //cmbyear.SelectedItem.Value = Year ;
-        
+ 
        
     }
     [DirectMethod]
@@ -69,22 +69,10 @@ public partial class WebPage_BudgetAnalyse_BudgetexecutionrateNew : BudgetBasePa
             depid = common.IntSafeConvert(cmbdept.SelectedItem.Value);
         }
         string year = cmbyear.SelectedItem.Value ?? DateTime.Now.Year.ToString();
-         
-            string month = cmbmonth.SelectedItem.Value ?? DateTime.Now.Month.ToString();
-            month = month.Length == 1 ? "0" + month : month;
-            string yearMonth = year + "-" + month;
 
-            string precmb = (common.IntSafeConvert(month) - 1).ToString();
-            precmb = precmb.Length == 1 ? "0" + precmb : precmb;
-            string preYearMonth = year + "-" + precmb;
-            //yearMonth = "2015-02";
-            //preYearMonth = "2015-01";
-            //DataTable dtpiidTable = ExecuteNewLogic.GetDtPiidList(depid, yearMonth, tem);
-            //DataTable predtpiidTable = ExecuteNewLogic.GetDtPiidList(depid, preYearMonth, tem);
-
-            // DataTable dt = BG_PayIncomeLogic.GetDtPayIncomeByPIID(tem);
-            DataTable dt = ExecuteNewLogic.GetDtAllPiidList(depid, yearMonth, preYearMonth);
-            if (dt.Rows.Count == 0)
+        
+            DataTable dt = ExecuteNewLogic.GetDtAllPiidListyear(depid, year);
+            if (dt.Rows.Count==0)
             {
                 X.Msg.Alert("系统提示", "本月没有执行相关数据").Show();
                 root.EmptyChildren = true;
@@ -102,27 +90,16 @@ public partial class WebPage_BudgetAnalyse_BudgetexecutionrateNew : BudgetBasePa
 
             }
             piidList = piidList.TrimEnd(',');
-            DataTable dtcashier = ExecuteNewLogic.GetCashierData(depid, yearMonth, piidList);
-            DataTable pMoney = ExecuteNewLogic.GetReceiptsData(depid, preYearMonth, piidList, 0);
-            DataTable pMoney1 = ExecuteNewLogic.GetReceiptsData(depid, preYearMonth, piidList, 1);
-            DataTable pMoney2 = ExecuteNewLogic.GetReceiptsData(depid, preYearMonth, piidList, 2);
-            DataTable rpMoney = ExecuteNewLogic.GetReceiptsData(depid, yearMonth, piidList, 0);
-            DataTable rpMoney1 = ExecuteNewLogic.GetReceiptsData(depid, yearMonth, piidList, 1);
-            DataTable rpMoney2 = ExecuteNewLogic.GetReceiptsData(depid, yearMonth, piidList, 2);
+            DataTable dtcashier = ExecuteNewLogic.GetCashierDatayear(depid, year, piidList);
+            DataTable RpMoney = ExecuteNewLogic.GetReceiptsDatayear(depid, year, piidList, 2); 
             DataTable totalMon = ExecuteNewLogic.GetBudgetAllocationData(depid, year, piidList);
             DataTable newTable = new DataTable();
             newTable.Columns.Add("PIID");
             newTable.Columns.Add("ChildID");
             newTable.Columns.Add("PIEcoSubName");
             newTable.Columns.Add("totalMon");
-            newTable.Columns.Add("BQMon");
-            newTable.Columns.Add("CashierBalance");
-            newTable.Columns.Add("PMoney");
-            newTable.Columns.Add("PMoney1");
-            newTable.Columns.Add("PMoney2");
+            newTable.Columns.Add("BQMon"); 
             newTable.Columns.Add("RpMoney");
-            newTable.Columns.Add("RpMoney1");
-            newTable.Columns.Add("RpMoney2");
             for (int i = 0; i < dt.Rows.Count; i++)
             {
                 DataRow drRow = newTable.NewRow();
@@ -133,55 +110,15 @@ public partial class WebPage_BudgetAnalyse_BudgetexecutionrateNew : BudgetBasePa
                     if (dtca.Length > 0)
                     {
                         drRow["BQMon"] = dtca[0]["BQMon"];
-                        drRow["CashierBalance"] = dtca[0]["CashierBalance"];
+                        //drRow["CashierBalance"] = dtca[0]["CashierBalance"];
                     }
-                }
-                if (rpMoney.Rows.Count > 0)
+                } 
+                if (RpMoney.Rows.Count > 0)
                 {
-                    DataRow[] dtrp = rpMoney.Select("piid=" + piid);
-                    if (dtrp.Length > 0)
-                    {
-                        drRow["RpMoney"] = dtrp[0]["RpMoney"];
-                    }
-                }
-                if (rpMoney1.Rows.Count > 0)
-                {
-                    DataRow[] dtrp1 = rpMoney1.Select("piid=" + piid);
-                    if (dtrp1.Length > 0)
-                    {
-                        drRow["RpMoney1"] = dtrp1[0]["RpMoney"];
-                    }
-                }
-                if (rpMoney2.Rows.Count > 0)
-                {
-                    DataRow[] dtrp2 = rpMoney2.Select("piid=" + piid);
-                    if (dtrp2.Length > 0)
-                    {
-                        drRow["RpMoney2"] = dtrp2[0]["RpMoney"];
-                    }
-                }
-                if (pMoney.Rows.Count > 0)
-                {
-                    {
-                        DataRow[] dtp = pMoney.Select("piid=" + piid);
-                        if (dtp.Length > 0)
-                            drRow["PMoney"] = dtp[0]["RpMoney"];
-                    }
-                }
-                if (pMoney1.Rows.Count > 0)
-                {
-                    DataRow[] dtp1 = pMoney1.Select("piid=" + piid);
-                    if (dtp1.Length > 0)
-                    {
-                        drRow["PMoney1"] = dtp1[0]["RpMoney"];
-                    }
-                }
-                if (pMoney2.Rows.Count > 0)
-                {
-                    DataRow[] dtp2 = pMoney2.Select("piid=" + piid);
+                    DataRow[] dtp2 = RpMoney.Select("piid=" + piid);
                     if (dtp2.Length > 0)
                     {
-                        drRow["PMoney2"] = dtp2[0]["RpMoney"];
+                        drRow["RpMoney"] = dtp2[0]["RpMoney"];
                     }
                 }
                 if (totalMon.Rows.Count > 0)
@@ -205,53 +142,41 @@ public partial class WebPage_BudgetAnalyse_BudgetexecutionrateNew : BudgetBasePa
                 newNode.NodeID = piid;
                 newNode.Text = dtroot.Rows[i]["ParentPIEcoSubName"].ToString();
                 newNode.Icon = Icon.Folder;
-                decimal BQMon = 0, CashierBalance = 0, PMoney = 0, PMoney1 = 0, PMoney2 = 0, RpMoney = 0, RpMoney1 = 0, RpMoney2 = 0, total = 0;
+               // newNode.Leaf = true;
+                decimal BQMond = 0, RpMoneyd = 0, totalMond = 0;
                 DataRow[] drrowsleaf = newTable.Select("PIID=" + piid);
                 if (drrowsleaf.Length > 0)
                 {
+                    NodeCollection nc=new NodeCollection();
                     for (int j = 0; j < drrowsleaf.Length; j++)
                     {
                         Node nodenew = new Node();
                         nodenew.NodeID = drrowsleaf[j]["ChildID"].ToString();
                         nodenew.Text = drrowsleaf[j]["PIEcoSubName"].ToString();
                         //nodenew.CustomAttributes.Add(new ConfigItem("PIID",drRows[j]["PIEcoSubName"].ToString(), ParameterMode.Value));
-                        //nodenew.CustomAttributes.Add(new ConfigItem("PIEcoSubName",drRows[j]["PIEcoSubName"].ToString(), ParameterMode.Value)); 
-                        nodenew.CustomAttributes.Add(new ConfigItem("BQMon", drrowsleaf[j]["BQMon"].ToString(), ParameterMode.Value));
-                        nodenew.CustomAttributes.Add(new ConfigItem("CashierBalance", drrowsleaf[j]["CashierBalance"].ToString(), ParameterMode.Value));
-                        nodenew.CustomAttributes.Add(new ConfigItem("PMoney", drrowsleaf[j]["PMoney"].ToString(), ParameterMode.Value));
-                        nodenew.CustomAttributes.Add(new ConfigItem("PMoney1 ", drrowsleaf[j]["PMoney1"].ToString(), ParameterMode.Value));
-                        nodenew.CustomAttributes.Add(new ConfigItem("PMoney2 ", drrowsleaf[j]["PMoney2"].ToString(), ParameterMode.Value));
-                        nodenew.CustomAttributes.Add(new ConfigItem("RpMoney ", drrowsleaf[j]["RpMoney"].ToString(), ParameterMode.Value));
-                        nodenew.CustomAttributes.Add(new ConfigItem("RpMoney1 ", drrowsleaf[j]["RpMoney1"].ToString(), ParameterMode.Value));
-                        nodenew.CustomAttributes.Add(new ConfigItem("RpMoney2 ", drrowsleaf[j]["RpMoney2"].ToString(), ParameterMode.Value)); nodenew.CustomAttributes.Add(new ConfigItem("totalMon ", drrowsleaf[j]["totalMon"].ToString(), ParameterMode.Value));
+                        //nodenew.CustomAttributes.Add(new ConfigItem("PIEcoSubName",drRows[j]["PIEcoSubName"].ToString(), ParameterMode.Value));
+                        nodenew.CustomAttributes.Add(new ConfigItem("BQMon", drrowsleaf[j]["BQMon"].ToString(), ParameterMode.Value)); 
+                        nodenew.CustomAttributes.Add(new ConfigItem("RpMoney ", drrowsleaf[j]["RpMoney"].ToString(), ParameterMode.Value)); 
+                        nodenew.CustomAttributes.Add(new ConfigItem("totalMon ", drrowsleaf[j]["totalMon"].ToString(), ParameterMode.Value));
                         nodenew.Leaf = true;
                         nodenew.Icon = Icon.Anchor;
-                        newNode.Children.Add(nodenew);
-                        BQMon += ParToDecimal.ParToDel(drrowsleaf[j]["BQMon"].ToString());
-                        CashierBalance += ParToDecimal.ParToDel(drrowsleaf[j]["CashierBalance"].ToString());
-                        PMoney += ParToDecimal.ParToDel(drrowsleaf[j]["PMoney"].ToString());
-                        PMoney1 += ParToDecimal.ParToDel(drrowsleaf[j]["PMoney1"].ToString());
-                        PMoney2 += ParToDecimal.ParToDel(drrowsleaf[j]["PMoney2"].ToString());
-                        RpMoney += ParToDecimal.ParToDel(drrowsleaf[j]["RpMoney"].ToString());
-                        RpMoney1 += ParToDecimal.ParToDel(drrowsleaf[j]["RpMoney1"].ToString());
-                        RpMoney2 += ParToDecimal.ParToDel(drrowsleaf[j]["RpMoney2"].ToString());
-                        total += ParToDecimal.ParToDel(drrowsleaf[j]["totalMon"].ToString());
+                        nc.Add(nodenew);
+                        
+                        BQMond += ParToDecimal.ParToDel(drrowsleaf[j]["BQMon"].ToString());
+                        RpMoneyd += ParToDecimal.ParToDel(drrowsleaf[j]["RpMoney"].ToString());
+                        totalMond += ParToDecimal.ParToDel(drrowsleaf[j]["totalMon"].ToString());
                     }
+                    newNode.CustomAttributes.Add(new ConfigItem("BQMon", BQMond.ToString(), ParameterMode.Value));
+                    newNode.CustomAttributes.Add(new ConfigItem("RpMoney ", RpMoneyd.ToString(), ParameterMode.Value));
+                    newNode.CustomAttributes.Add(new ConfigItem("totalMon ", totalMond.ToString(), ParameterMode.Value));
+                   
+                    root.Children.Add(newNode);
+                    newNode.Children.AddRange(nc);
                 }
                 else
                 {
                     newNode.EmptyChildren = true;
                 }
-                newNode.CustomAttributes.Add(new ConfigItem("BQMon", BQMon.ToString(), ParameterMode.Value));
-                newNode.CustomAttributes.Add(new ConfigItem("CashierBalance", CashierBalance.ToString(), ParameterMode.Value));
-                newNode.CustomAttributes.Add(new ConfigItem("PMoney", PMoney.ToString(), ParameterMode.Value));
-                newNode.CustomAttributes.Add(new ConfigItem("PMoney1 ", PMoney1.ToString(), ParameterMode.Value));
-                newNode.CustomAttributes.Add(new ConfigItem("PMoney2 ", PMoney2.ToString(), ParameterMode.Value));
-                newNode.CustomAttributes.Add(new ConfigItem("RpMoney ", RpMoney.ToString(), ParameterMode.Value));
-                newNode.CustomAttributes.Add(new ConfigItem("RpMoney1 ", RpMoney1.ToString(), ParameterMode.Value));
-                newNode.CustomAttributes.Add(new ConfigItem("RpMoney2 ", RpMoney2.ToString(), ParameterMode.Value));
-                newNode.CustomAttributes.Add(new ConfigItem("totalMon ", total.ToString(), ParameterMode.Value));
-                root.Children.Add(newNode);
             } 
         
         return nodes;
@@ -368,107 +293,55 @@ public partial class WebPage_BudgetAnalyse_BudgetexecutionrateNew : BudgetBasePa
         //这里是表头绘制
 
 
-       
+      
             IRow headrow = sheet.CreateRow(0);
             ICell cell = headrow.CreateCell(0);
             cell.SetCellValue("经济科目");
             cell.CellStyle = style;
-            sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(0, 2, 0, 0));
+            // sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(0, 1, 0, 0));
             ICell cell1 = headrow.CreateCell(1);
             cell1.SetCellValue("年初经费(元)");
             cell1.CellStyle = style;
-            sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(0, 2, 1, 1));
-
-            ICell celln2 = headrow.CreateCell(2);
-            celln2.SetCellValue("当月可用计划");
-            celln2.CellStyle = style;
-            sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(0, 0, 2, 6));
-
-            ICell cell2 = headrow.CreateCell(7);
-            cell2.SetCellValue("预算执行");
+            // sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(0, 1, 1, 1));
+            ICell cell2 = headrow.CreateCell(2);
+            cell2.SetCellValue("申请计划数(元)");
             cell2.CellStyle = style;
-            sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(0, 0, 7, 9));
-            ICell cell3 = headrow.CreateCell(10);
-            cell3.SetCellValue("预算结余");
+            //sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(0, 0, 2, 4));
+            ICell cell3 = headrow.CreateCell(3);
+            cell3.SetCellValue("报销执行金额(元)");
             cell3.CellStyle = style;
-            sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(0, 0, 10, 12));
-            ICell cell4 = headrow.CreateCell(13);
-            cell4.SetCellValue("预算执行率");
+            // sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(0, 0, 5, 7));
+            ICell cell4 = headrow.CreateCell(4);
+            cell4.SetCellValue("余额");
             cell4.CellStyle = style;
-            sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(0, 0, 13, 15));
-
-
+            ICell cell5 = headrow.CreateCell(6);
+            cell5.SetCellValue("执行率");
+            cell5.CellStyle = style;
+            sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(0, 1, 0, 0));
+            sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(0, 1, 1, 1));
+            sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(0, 1, 2, 2));
+            sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(0, 1, 3, 3));
+            sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(0, 0, 4, 5));
+            sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(0, 0, 6, 7));
 
 
             IRow headrow1 = sheet.CreateRow(1);
-            ICell cell5 = headrow1.CreateCell(7);
-            cell5.SetCellValue("申请数(元)");
-            cell5.CellStyle = style;
-            ICell cell6 = headrow1.CreateCell(8);
-            cell6.SetCellValue("已审核(元)");
+            ICell cell6 = headrow1.CreateCell(4);
+            cell6.SetCellValue("计划(元)");
             cell6.CellStyle = style;
-            ICell cell7 = headrow1.CreateCell(9);
-            cell7.SetCellValue("已支付(元)");
+
+            ICell cell7 = headrow1.CreateCell(5);
+            cell7.SetCellValue("执行(元)");
             cell7.CellStyle = style;
-            ICell cell8 = headrow1.CreateCell(10);
-            cell8.SetCellValue("申请数(元)");
+
+            ICell cell8 = headrow1.CreateCell(6);
+            cell8.SetCellValue("计划");
             cell8.CellStyle = style;
-            ICell cell9 = headrow1.CreateCell(11);
-            cell9.SetCellValue("已审核(元)");
+
+            ICell cell9 = headrow1.CreateCell(7);
+            cell9.SetCellValue("执行");
             cell9.CellStyle = style;
-            ICell cell10 = headrow1.CreateCell(12);
-            cell10.SetCellValue("已支付(元)");
-            cell10.CellStyle = style;
-            ICell cell11 = headrow1.CreateCell(13);
-            cell11.SetCellValue("申请数");
-            cell11.CellStyle = style;
-            ICell cell12 = headrow1.CreateCell(14);
-            cell12.SetCellValue("已审核");
-            cell12.CellStyle = style;
-            ICell cell13 = headrow1.CreateCell(15);
-            cell13.SetCellValue("已支付");
-            cell13.CellStyle = style;
-            sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(1, 2, 7, 7));
-            sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(1, 2, 8, 8));
-            sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(1, 2, 9, 9));
-            sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(1, 2, 10, 10));
-            sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(1, 2, 11, 11));
-            sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(1, 2, 12, 12));
-            sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(1, 2, 13, 13));
-            sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(1, 2, 14, 14));
-            sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(1, 2, 15, 15));
-
-
-            ICell celln3 = headrow1.CreateCell(2);
-            celln3.SetCellValue("小计(元)");
-            celln3.CellStyle = style;
-            sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(1, 2, 2, 2));
-
-            ICell celln4 = headrow1.CreateCell(3);
-            celln4.SetCellValue("上月余额");
-            celln4.CellStyle = style;
-            sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(1, 1, 3, 5));
-
-            ICell celln5 = headrow1.CreateCell(6);
-            celln5.SetCellValue("本月申请(元)");
-            celln5.CellStyle = style;
-            sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(1, 2, 6, 6));
-
-            IRow headrow2 = sheet.CreateRow(2);
-
-            ICell cellnn3 = headrow2.CreateCell(3);
-            cellnn3.SetCellValue("申请数(元)");
-            cellnn3.CellStyle = style;
-
-            ICell cellnn4 = headrow2.CreateCell(4);
-            cellnn4.SetCellValue("已审核数(元)");
-            cellnn4.CellStyle = style;
-
-
-            ICell cellnn5 = headrow2.CreateCell(5);
-            cellnn5.SetCellValue("已支付数(元)");
-            cellnn5.CellStyle = style;
-       
+        
         #region 第二步：将DataTable导出到Excel
         if (dt != null && dt.Rows.Count > 0)
         {

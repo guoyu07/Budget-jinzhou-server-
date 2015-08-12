@@ -317,11 +317,11 @@ public partial class WebPage_BudgetControl_BudgetAllocation : BudgetBasePage
             string urltmp = url.Remove(itpm + 5, url.Length - itpm - 5);
             if (depID == "0")
             {
-                Response.Redirect(urltmp + "/expen/" + "verify-juzhangjijin.aspx", true);
+                Response.Redirect("verify-juzhangjijin.aspx", true);
             }
             else
             {
-                Response.Redirect(urltmp + "/expen/" + "cashier_keshiyewufei.aspx", true);
+                Response.Redirect("cashier_keshiyewufei.aspx", true);
             }
         }
         else

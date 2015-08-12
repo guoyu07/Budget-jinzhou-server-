@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="BudgetexecutionrateNew.aspx.cs" Inherits="WebPage_BudgetAnalyse_BudgetexecutionrateNew" ValidateRequest="false" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="BudgetexecutionrateNewyear.aspx.cs" Inherits="WebPage_BudgetAnalyse_BudgetexecutionrateNewyear" ValidateRequest="false" %>
 
 <%@ Register Assembly="Ext.Net" Namespace="Ext.Net" TagPrefix="ext" %>
 <%@ Register Src="~/WebPage/BudgetAnalyse/FloatUnit.ascx" TagPrefix="uc1" TagName="FloatUnit" %>
@@ -80,7 +80,7 @@
                                         </ext:ComboBox>
                                     </Items>
                                 </ext:Panel>
-                                <ext:Panel ID="Panel2" Border="false" runat="server" Layout="ColumnLayout" Width="400" MarginSpec="0 0 10 0" BaseCls="background:transeparent">
+                                <ext:Panel ID="Panel2" Border="false" Visible="false" runat="server" Layout="ColumnLayout" Width="400" MarginSpec="0 0 10 0" BaseCls="background:transeparent">
                                     <Items>
                                         <ext:Label ID="Label2" runat="server" MarginSpec="5 5 0 5" Text="月　　份：" Width="60"></ext:Label>
                                         <ext:ComboBox ID="cmbmonth" runat="server" ColumnWidth="0.6" MinWidth="60" Editable="false">
@@ -128,104 +128,67 @@
 
                             </Items>
                         </ext:Container>
+
+
                         <ext:TreePanel
                             Region="Center"
                             ID="treepl"
-                            Title="月度执行率"
+                            Title=""
                             Lines="false"
                             UseArrows="true"
                             runat="server"
                             AutoScroll="true"
                             Animate="true"
+                            SingleExpand="False"
                             Mode="Remote"
                             RootVisible="false"
-                            SingleExpand="False"
                             ContainerScroll="true">
                             <Fields>
-                                <ext:ModelField Name="text" />
                                 <ext:ModelField Name="PIID"></ext:ModelField>
-                                <ext:ModelField Name="BQMon"></ext:ModelField>
-                                <ext:ModelField Name="CashierBalance"></ext:ModelField>
-                                <ext:ModelField Name="PMoney"></ext:ModelField>
-                                <ext:ModelField Name="PMoney1"></ext:ModelField>
-                                <ext:ModelField Name="PMoney2"></ext:ModelField>
+                                <ext:ModelField Name="PIEcoSubName"></ext:ModelField>
                                 <ext:ModelField Name="totalMon"></ext:ModelField>
-                                <ext:ModelField Name="RpMoney"></ext:ModelField>
-                                <ext:ModelField Name="RpMoney1"></ext:ModelField>
+                                <ext:ModelField Name="MPFunding"></ext:ModelField>
                                 <ext:ModelField Name="RpMoney2"></ext:ModelField>
                             </Fields>
                             <ColumnModel>
                                 <Columns>
-                                    <ext:TreeColumn ID="TreeColumn1" runat="server" DataIndex="text" Text="经济科目" Flex="4">
+                                    <ext:TreeColumn ID="TreeColumn2" runat="server" DataIndex="text" Text="经济科目" Flex="4">
                                     </ext:TreeColumn>
-                                    <ext:Column runat="server" DataIndex="totalMon" Width="100" Text="年初经费(元)">
+                                    <ext:Column runat="server" Text="年初预算金额（元）" Width="120" DataIndex="totalMon">
                                         <Renderer Handler="return (value*1.00).toFixed(2)" />
                                     </ext:Column>
-                                    <ext:Column runat="server" Text="当月可用计划">
+                                    <ext:Column runat="server" Text="申请计划数（元）" Width="120" DataIndex="MPFunding">
+                                        <Renderer Handler="return (value*1.00).toFixed(2)" />
+                                    </ext:Column>
+                                    <ext:Column runat="server" Text="报销执行金额（元）" Width="120" DataIndex="RpMoney2">
+                                        <Renderer Handler="return (value*1.00).toFixed(2)" />
+                                    </ext:Column>
+                                    <ext:Column runat="server" Text="余额">
                                         <Columns>
-                                            <ext:Column runat="server" EmptyCellText="0" Width="100" DataIndex="CashierBalance" Text="小计(元)">
-                                                <Renderer Handler="return (value*1.00).toFixed(2)" />
+                                            <ext:Column runat="server" Text="计划（元）" Width="100">
+                                                <Renderer Handler="return ((record.data.totalMon-record.data.MPFunding)*1.00).toFixed(2)"></Renderer>
                                             </ext:Column>
-                                            <ext:Column runat="server" Text="上月余额">
-                                                <Columns>
-                                                    <ext:Column runat="server" EmptyCellText="0" Width="100" DataIndex="PMoney" Text="申请数(元)">
-                                                        <Renderer Handler="return (value*1.00).toFixed(2)" />
-                                                    </ext:Column>
-                                                    <ext:Column runat="server" EmptyCellText="0" Width="100" DataIndex="PMoney1" Text="已审核(元)">
-                                                        <Renderer Handler="return (value*1.00).toFixed(2)" />
-                                                    </ext:Column>
-                                                    <ext:Column runat="server" EmptyCellText="0" Width="100" DataIndex="PMoney2" Text="已支付(元)">
-                                                        <Renderer Handler="return (value*1.00).toFixed(2)" />
-                                                    </ext:Column>
-                                                </Columns>
-                                            </ext:Column>
-                                            <ext:Column runat="server" EmptyCellText="0" Width="100" DataIndex="BQMon" Text="本月申请(元)">
-                                                <Renderer Handler="return (value*1.00).toFixed(2)" />
+                                            <ext:Column runat="server" Text="执行（元）" Width="100">
+                                                <Renderer Handler="return ((record.data.totalMon-record.data.RpMoney2)*1.00).toFixed(2)"></Renderer>
                                             </ext:Column>
                                         </Columns>
                                     </ext:Column>
-                                    <ext:Column runat="server" Text="预算执行">
+                                    <ext:Column runat="server" Text="执行率">
                                         <Columns>
-                                            <ext:Column runat="server" EmptyCellText="0" Width="100" DataIndex="RpMoney" Text="申请数(元)">
-                                                <Renderer Handler="return (value*1.00).toFixed(2)" />
+                                            <ext:Column runat="server" Text="计划" Width="100">
+                                                <Renderer Handler="return ((record.data.MPFunding / (record.data.totalMon==0?1:record.data.totalMon))*100).toFixed(2)+'%';" />
                                             </ext:Column>
-                                            <ext:Column runat="server" EmptyCellText="0" Width="100" Text="已审核(元)" DataIndex="RpMoney1">
-                                                <Renderer Handler="return (value*1.00).toFixed(2)" />
-                                            </ext:Column>
-                                            <ext:Column runat="server" EmptyCellText="0" Width="100" Text="已支付(元)" DataIndex="RpMoney2">
-                                                <Renderer Handler="return (value*1.00).toFixed(2)" />
-                                            </ext:Column>
-                                        </Columns>
-                                    </ext:Column>
-                                    <ext:Column runat="server" Text="预算结余">
-                                        <Columns>
-                                            <ext:Column runat="server" EmptyCellText="0" Width="100" Text="申请数(元)">
-                                                <Renderer Handler="return (record.data.totalMon-record.data.RpMoney).toFixed(2)"></Renderer>
-                                            </ext:Column>
-                                            <ext:Column runat="server" EmptyCellText="0" Width="100" Text="已审核(元)">
-                                                <Renderer Handler="return (record.data.totalMon-record.data.RpMoney1).toFixed(2)"></Renderer>
-                                            </ext:Column>
-                                            <ext:Column runat="server" Width="100" Text="已支付(元)">
-                                                <Renderer Handler="return (record.data.totalMon-record.data.RpMoney2).toFixed(2)"></Renderer>
-                                            </ext:Column>
-                                        </Columns>
-                                    </ext:Column>
-                                    <ext:Column runat="server" Text="预算执行率">
-                                        <Columns>
-                                            <ext:Column runat="server" EmptyCellText="0" Width="100" Text="申请数">
-                                                <Renderer Handler="return ((record.data.RpMoney / (record.data.totalMon==0?1:record.data.totalMon))*100).toFixed(2)+'%';" />
-                                            </ext:Column>
-                                            <ext:Column runat="server" EmptyCellText="0" Width="100" Text="已审核">
-                                                <Renderer Handler="return ((record.data.RpMoney1 / (record.data.totalMon==0?1:record.data.totalMon))*100).toFixed(2)+'%';" />
-                                            </ext:Column>
-                                            <ext:Column runat="server" Width="100" Text="已支付">
+                                            <ext:Column runat="server" Text="执行" Width="100">
                                                 <Renderer Handler="return ((record.data.RpMoney2 / (record.data.totalMon==0?1:record.data.totalMon))*100).toFixed(2)+'%';" />
                                             </ext:Column>
                                         </Columns>
                                     </ext:Column>
+
                                 </Columns>
                             </ColumnModel>
-
+                            <Listeners>
+                                <Activate Handler="#{Label2}.hide();#{cmbmonth}.hide();"></Activate>
+                            </Listeners>
                         </ext:TreePanel>
                     </Items>
                 </ext:Panel>

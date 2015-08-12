@@ -117,6 +117,7 @@
     <Compile Include="AutoCreate\BLL\BG_Unit_DbbakManager.cs" />
     <Compile Include="AutoCreate\BLL\BG_UserManager.cs" />
     <Compile Include="AutoCreate\BLL\BG_UserPurviewManager.cs" />
+    <Compile Include="AutoCreate\BLL\RM_keshiyewufeiManager.cs" />
     <Compile Include="AutoCreate\DAL\BG_AmountService.cs" />
     <Compile Include="AutoCreate\DAL\BG_ApplyReimburService.cs" />
     <Compile Include="AutoCreate\DAL\BG_BudAppendixService.cs" />
@@ -176,6 +177,7 @@
     <Compile Include="AutoCreate\DAL\BG_UserPurviewService.cs" />
     <Compile Include="AutoCreate\DAL\BG_UserService.cs" />
     <Compile Include="AutoCreate\DAL\DBUnity.cs" />
+    <Compile Include="AutoCreate\DAL\RM_keshiyewufeiService.cs" />
     <Compile Include="AutoCreate\Model\BG_Amount.cs" />
     <Compile Include="AutoCreate\Model\BG_ApplyReimbur.cs" />
     <Compile Include="AutoCreate\Model\BG_BudAppendix.cs" />
@@ -234,6 +236,7 @@
     <Compile Include="AutoCreate\Model\BG_Unit_Dbbak.cs" />
     <Compile Include="AutoCreate\Model\BG_User.cs" />
     <Compile Include="AutoCreate\Model\BG_UserPurview.cs" />
+    <Compile Include="AutoCreate\Model\RM_keshiyewufei.cs" />
     <Compile Include="Core\BGBudItemHisLogic.cs" />
     <Compile Include="Core\BGBudItemsLibrariesLogic.cs" />
     <Compile Include="Core\BGBudItemsLogic.cs" />

@@ -832,11 +832,19 @@ public partial class _Default : BudgetBasePage
 
             Node node5 = new Node();
             node5.NodeID = "NodeBA5";
-            node5.Text = "预算执行率";
+            node5.Text = "预算月度执行率";//BGexecutePages.aspx
             node5.Href = "WebPage\\BudgetAnalyse\\BudgetexecutionrateNew.aspx";
             node5.Icon = Icon.PageLink;
             node5.Leaf = true;
             nodes.Add(node5);
+
+            Node node6 = new Node();
+            node6.NodeID = "NodeBA6";
+            node6.Text = "预算年度执行率";//BGexecutePages.aspx
+            node6.Href = "WebPage\\BudgetAnalyse\\BudgetexecutionrateNewyear.aspx";
+            node6.Icon = Icon.PageLink;
+            node6.Leaf = true;
+            nodes.Add(node6);
         }
 
         //Node node4 = new Node();
