@@ -147,8 +147,8 @@
                                 <ext:ModelField Name="PIID"></ext:ModelField>
                                 <ext:ModelField Name="PIEcoSubName"></ext:ModelField>
                                 <ext:ModelField Name="totalMon"></ext:ModelField>
-                                <ext:ModelField Name="MPFunding"></ext:ModelField>
-                                <ext:ModelField Name="RpMoney2"></ext:ModelField>
+                                <ext:ModelField Name="BQMon"></ext:ModelField>
+                                <ext:ModelField Name="RpMoney"></ext:ModelField>
                             </Fields>
                             <ColumnModel>
                                 <Columns>
@@ -157,29 +157,29 @@
                                     <ext:Column runat="server" Text="年初预算金额（元）" Width="120" DataIndex="totalMon">
                                         <Renderer Handler="return (value*1.00).toFixed(2)" />
                                     </ext:Column>
-                                    <ext:Column runat="server" Text="申请计划数（元）" Width="120" DataIndex="MPFunding">
+                                    <ext:Column runat="server" Text="申请计划数（元）" Width="120" DataIndex="BQMon">
                                         <Renderer Handler="return (value*1.00).toFixed(2)" />
                                     </ext:Column>
-                                    <ext:Column runat="server" Text="报销执行金额（元）" Width="120" DataIndex="RpMoney2">
+                                    <ext:Column runat="server" Text="报销执行金额（元）" Width="120" DataIndex="RpMoney">
                                         <Renderer Handler="return (value*1.00).toFixed(2)" />
                                     </ext:Column>
                                     <ext:Column runat="server" Text="余额">
                                         <Columns>
                                             <ext:Column runat="server" Text="计划（元）" Width="100">
-                                                <Renderer Handler="return ((record.data.totalMon-record.data.MPFunding)*1.00).toFixed(2)"></Renderer>
+                                                <Renderer Handler="return ((record.data.totalMon-record.data.BQMon)*1.00).toFixed(2)"></Renderer>
                                             </ext:Column>
                                             <ext:Column runat="server" Text="执行（元）" Width="100">
-                                                <Renderer Handler="return ((record.data.totalMon-record.data.RpMoney2)*1.00).toFixed(2)"></Renderer>
+                                                <Renderer Handler="return ((record.data.totalMon-record.data.RpMoney)*1.00).toFixed(2)"></Renderer>
                                             </ext:Column>
                                         </Columns>
                                     </ext:Column>
                                     <ext:Column runat="server" Text="执行率">
                                         <Columns>
                                             <ext:Column runat="server" Text="计划" Width="100">
-                                                <Renderer Handler="return ((record.data.MPFunding / (record.data.totalMon==0?1:record.data.totalMon))*100).toFixed(2)+'%';" />
+                                                <Renderer Handler="return ((record.data.BQMon / (record.data.totalMon==0?1:record.data.totalMon))*100).toFixed(2)+'%';" />
                                             </ext:Column>
                                             <ext:Column runat="server" Text="执行" Width="100">
-                                                <Renderer Handler="return ((record.data.RpMoney2 / (record.data.totalMon==0?1:record.data.totalMon))*100).toFixed(2)+'%';" />
+                                                <Renderer Handler="return ((record.data.RpMoney / (record.data.totalMon==0?1:record.data.totalMon))*100).toFixed(2)+'%';" />
                                             </ext:Column>
                                         </Columns>
                                     </ext:Column>
